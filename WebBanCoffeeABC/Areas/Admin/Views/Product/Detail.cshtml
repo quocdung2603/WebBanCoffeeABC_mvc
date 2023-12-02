@@ -1,0 +1,227 @@
+﻿@model WebBanCoffeeABC.Models.tDanhMucSP
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h1 style="display:flex; justify-content:center;">QUẢN LÝ SẢN PHẨM</h1>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="forms-sample" action="/admin/product/detail" method="get">
+                    <div class="card">
+                        <div class="card-header p-2">
+                            <ul class="nav nav-pills">
+                                <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Thông Tin Sản Phẩm</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Hình Ảnh</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Kích Thước</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#ingredients" data-toggle="tab">Nguyên Liệu</a></li>
+                            </ul>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="active tab-pane" id="activity">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Mã Sản Phẩm</label>
+                                        <input type="text" name="TenSP" class="form-control" value="@Model.MaSP" readonly />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Tên Sản Phẩm</label>
+                                        <input type="text" name="TenSP" class="form-control" value="@Model.TenSP" readonly />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Loại Sản Phẩm</label>
+                                        <input type="text" class="form-control" value="@Model.tLoaiSP.Loai" readonly />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Hãng Sản Xuất</label>
+                                        <input type="text" class="form-control" value="@Model.tHangSX.TenHangSX" readonly />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Giới Thiệu Sản Phẩm</label>
+                                        <textarea class="form-control" id="txtDetail" name="GioiThieuSP" readonly>@Html.Raw(Model.GioiThieuSP)</textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Giá Gốc</label>
+                                                <input type="text" class="form-control" name="GiaGoc" value="@Model.GiaGoc" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="timeline">
+                                    <!-- The timeline -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-hover" id="tbAnhSanPham">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">STT</th>
+                                                        <th class="text-center">Ảnh Sản Phẩm</th>
+                                                        <th class="text-center">Mặc Định</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.tAnhSPs.Count > 0)
+                                                    {
+                                                        var i = 0;
+                                                        foreach (var item in Model.tAnhSPs)
+                                                        {
+                                                            <tr>
+                                                                <td>@(i+1)</td>
+                                                                <td><img src="@item.TenFileAnh" style="width:100px; height:100px; border-radius:unset" /></td>
+                                                                @if (item.AnhMacDinh)
+                                                                {
+                                                                    <td><input type="checkbox" checked readonly /></td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td><input type="checkbox" readonly /></td>
+                                                                }
+                                                            </tr>
+                                                            i++;
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="settings">
+                                    <div class="row">
+                                        <table>
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th>STT</th>
+                                                    <th>Tên Kích Thước</th>
+                                                    <th>Giá Bán</th>
+                                                    <th>Giá Khuyến Mãi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.tKichThuocs.Count > 0)
+                                                {
+                                                    var i = 0;
+                                                    foreach (var item in Model.tKichThuocs)
+                                                    {
+                                                        <tr class="text-center">
+                                                            <td>
+                                                                <div class="form-group">
+                                                                    @(i+1)
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control" value="@item.KichThuoc" readonly />
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control" value="@item.GiaBan" readonly />
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group">
+                                                                    @if (item.GiaKhuyenMai > decimal.Zero)
+                                                                    {
+                                                                        <input type="text" class="form-control" value="@item.GiaKhuyenMai" readonly />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input type="text" class="form-control" value="0.0" readonly />
+                                                                    }
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        i++;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="3">Không có dữ liệu</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="ingredients">
+                                    <div class="row">
+                                        <table>
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th>STT</th>
+                                                    <th>Mã Nguyên Liệu</th>
+                                                    <th>Tên Nguyên Liệu</th>
+                                                    <th>Đơn Vị Tính</th>
+                                                    <th>Khối Lượng (g | ml)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Exams1">
+                                                @if (Model.tNguyenLieuSPs.Count > 0)
+                                                {
+                                                    var i = 0;
+                                                    foreach (var item in Model.tNguyenLieuSPs)
+                                                    {
+                                                        <tr class="text-center" id="Exam1">
+                                                            <td>
+                                                                <div class="form-group">
+                                                                    @(i+1)
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control" value="@item.MaNguyenLieu" />
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group">
+                                                                    <input list="Titles" id="Title" class="form-control" value="@item.tNguyenLieu.TenNguyenLieu">
+                                                                    <datalist id="Titles">
+                                                                        <option value="">
+                                                                    </datalist>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control" value="@item.tNguyenLieu.DonViTinh" />
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control" value="@item.Luong" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        i++;
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.tab-content -->
+                        </div><!-- /.card-body -->
+                        <div class="form-group">
+                            <a href="/admin/product" class="btn btn-danger">Quay Lại</a>
+                        </div>
+                    </div> <!-- /.card -->
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+    <!-- /.card-footer-->
+</div>

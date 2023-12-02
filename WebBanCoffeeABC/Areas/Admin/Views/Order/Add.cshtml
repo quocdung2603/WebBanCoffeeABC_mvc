@@ -1,0 +1,321 @@
+﻿@model  WebBanCoffeeABC.Models.tHoaDonBan
+@using WebBanCoffeeABC.Models;
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
+    var listProducts = db.tDanhMucSPs.ToList();
+    var listUsers = db.tKhachHangs.ToList();
+}
+@section naviheader{
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo" href="index.html"><img src="~/Content/assets/images/logo.svg" alt="logo" /></a>
+        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="~/Content/assets/images/logo-mini.svg" alt="logo" /></a>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-stretch">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+        </button>
+        <div class="search-field d-none d-md-block col-4">
+            <form class="d-flex align-items-center h-100" action="#">
+                <div class="input-group">
+                    <div class="input-group-prepend bg-transparent">
+                        <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                    </div>
+                    <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                </div>
+            </form>
+        </div>
+        <ul class="navbar-nav navbar-nav-right col-4">
+            <li class="nav-item nav-profile dropdown">
+                <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="nav-profile-img">
+                        <img src="~/Content/assets/images/faces/face1.jpg" alt="image">
+                        <span class="availability-status online"></span>
+                    </div>
+                    <div class="nav-profile-text">
+                        <p class="mb-1 text-black">David Greymaax</p>
+                    </div>
+                </a>
+                <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                    <a class="dropdown-item" href="#">
+                        <i class="mdi mdi-cached me-2 text-success"></i> Activity Log
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <i class="mdi mdi-logout me-2 text-primary"></i> Signout
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item d-none d-lg-block full-screen-link">
+                <a class="nav-link">
+                    <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="mdi mdi-email-outline"></i>
+                    <span class="count-symbol bg-warning"></span>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                    <i class="mdi mdi-bell-outline"></i>
+                    <span class="count-symbol bg-danger"></span>
+                </a>
+            </li>
+            <li class="nav-item nav-logout d-none d-lg-block">
+                <a class="nav-link" href="#">
+                    <i class="mdi mdi-power"></i>
+                </a>
+            </li>
+            <li class="nav-item nav-settings d-none d-lg-block">
+                <a class="nav-link" href="#">
+                    <i class="mdi mdi-format-line-spacing"></i>
+                </a>
+            </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+        </button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-header">
+                <h1 style="display:flex; justify-content:center;">Danh Sách Sản Phẩm</h1>
+            </div>
+            <div class="card-body">
+                <div class="row flex-wrap">
+                    @foreach (var product in listProducts)
+                    {
+                        var strImg = "";
+                        var img = product.tAnhSPs.FirstOrDefault(x => x.AnhMacDinh == true);
+                        if (img != null)
+                        {
+                            strImg = img.TenFileAnh;
+                        }
+                        <div class="col-md-4">
+                            <div class="card mb-3 d-flex flex-column justify-content-between">
+                                <img src="@strImg" class="card-img-top" id="AnhSP_@product.MaSP" style="height:128px;width:128px; display:flex; align-self:center;">
+                                <div class="col-md-12 d-flex flex-column align-items-center">
+                                    <h5 class="card-title text-center" id="TenSP_@product.MaSP">@product.TenSP</h5>
+                                    <select class="form-control" id="KichCoSP_@product.MaSP" style="margin-bottom:15px;">
+                                        <option value="">-Chọn Kích Cỡ-</option>
+                                        @foreach (var item in product.tKichThuocs)
+                                        {
+                                            <option value="@item.GiaBan" data-name="@item.KichThuoc">@item.KichThuoc</option>
+                                        }
+                                    </select>
+                                    <button style="margin-top:5px;" type="button" class="btn btn-primary btn-sm mt-auto btnChonSP" data-id="@product.MaSP">Thêm</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card overflow-auto">
+            <div class="card-header">
+                <h1 style="display:flex; justify-content:center;">Thông Tin Đơn Hàng</h1>
+            </div>
+            <div class="card-body">
+                <form action="/admin/order/add" method="post">
+                    <div class="form-group">
+                        <label>Khách Hàng</label>
+                        <input type="text" class="form-control" name="TenKhachHang" list="exampleList">
+                        <datalist id="exampleList">
+                            @foreach (var item in listUsers)
+                            {
+                                <option value="@item.TenKhachHang" data-value="@item.MaKhanhHang"></option>
+                            }
+                        </datalist>
+                        <input type="hidden" id="MaKhachHang" name="MaKhachHang" />
+                    </div>
+                    <div class="form-group">
+                        <label>Phương Thức Thanh Toán</label>
+                        <select class="form-control" name="PhuongThucThanhToan">
+                            <option value="">- Chọn Phương Thức Thanh Toán -</option>
+                            <option value="1">Banking</option>
+                            <option value="0">Trực tiếp</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ghi Chú</label>
+                        <textarea class="form-control" name="GhiChu"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Tổng Tiền Hóa Đơn</label>
+                        <input type="text" class="form-control" name="TongTienHD" id="TongTienHD" value="0" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label>Giảm Giá Hóa Đơn</label>
+                        <input type="text" class="form-control" name="GiamGiaHD" value="0" />
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Mã SP</th>
+                                    <th>Tên SP</th>
+                                    <th>Kích Cỡ</th>
+                                    <th>Giá Tiền</th>
+                                    <th>Số Lượng</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbHtml">
+                            </tbody>
+                        </table>
+                        <input type="hidden" id="tCurrentId" value="0" />
+                    </div>
+                    <div class="form-group" style="margin-top:50px; float:right; ">
+                        <a href="/admin/order/index" class="btn btn-light">Quay Lại</a>
+                        <button type="submit" class="btn btn-success">Thêm Mới</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @*thêm sản phẩm vào hóa đơn*@
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.btnChonSP', function () {
+                var id = $(this).data('id');
+                var tenSP = $('#TenSP_' + id).text();
+                //var anhSP = $('#AnhSP_' + id).attr('src');
+                var gbSP = $('#KichCoSP_' + id).val();
+                var ktSP = $('#KichCoSP_' + id).find(":selected").data("name");
+
+                if (ktSP == null) {
+                    alert('Bạn chưa chọn kích cỡ sản phẩm');
+                    return;
+                }
+                AddProductToRow(id, tenSP,gbSP,ktSP);
+            });
+        });
+
+        function AddProductToRow(id, tenSP, gbSP, ktSP) {
+            console.log(id + " " + tenSP + " " + ktSP + " " + gbSP);
+            var temp = $('#tCurrentId').val();
+            var currentId = parseInt(temp);
+            var str = "";
+            str += `<tr id="trow_${currentId}" class="text-center">
+                                <td><div class="form-group"><input type="text" class="form-control" name="LProduct[${currentId}].MaSP" value="${id}" readonly/></div></td>
+                                <td><div class="form-group"><input type="text" class="form-control" name="LProduct[${currentId}].TenSP" value="${tenSP}" readonly/></div></td>
+                                <td><div class="form-group"><input type="text" class="form-control" name="LProduct[${currentId}].KichCoSP" value="${ktSP}" readonly/></div></td>
+                                <td><div class="form-group"><input type="text" class="form-control" name="LProduct[${currentId}].GiaBanSP" value="${gbSP}" readonly/></div></td>
+                                <td><div class="form-group"><input type="text" class="form-control" name="LProduct[${currentId}].SoLuongSP" value="1" /></div></td>
+                                <td class="text-center"><div class="form-group">
+                                    <a href="#" data-id="${currentId}" class="btn btn-sm btn-danger btnXoaSP"><i class="mdi mdi-trash-can"></i></a>
+                                    <a href="#" data-id="${currentId}" class="btn btn-sm btn-warning btnCapNhatSP"><i class="mdi mdi-pen"></i></a>
+                                </div></td>
+                            </tr>`;
+            $('#tbHtml').append(str);
+            currentId += 1;
+            $('#tCurrentId').val(currentId);
+
+            //cập nhật lại tổng tiền hóa đơn
+            var tt = $('#TongTienHD').val();
+            tt = parseFloat(tt);
+            tt += parseFloat(gbSP);
+            $('#TongTienHD').val(tt);
+
+            // Cập nhật lại data-id, trow_, và index của LProduct
+            updateRowvsIndex();
+        }
+
+    </script>
+
+    @*xử lí xóa , sửa sản phẩm trong hóa đơn*@
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.btnXoaSP', function () {
+                var conf = confirm("Bạn có muốn xóa sản phẩm này khỏi đơn hàng không?");
+                if (conf === true) {
+                    var _id = $(this).data('id');
+                    //cập nhật lại tổng hóa đơn
+                    var gbSP = $('input[name="LProduct[' + _id + '].GiaBanSP"]').val();
+                    //console.log(gbSP);
+                    var tt = $('#TongTienHD').val();
+                    tt = parseFloat(tt);
+                    tt -= parseFloat(gbSP);
+                    $('#TongTienHD').val(tt);
+                    
+                    $('#trow_' + _id).fadeTo('fast', 0.5, function () {
+                        $(this).slideUp('fast', function () {
+                            $(this).remove();
+                            updateRowvsIndex();
+                        });
+                    });
+                    var temp = $('#tCurrentId').val();
+                    var currentId = parseInt(temp) - 1;
+                    $('#tCurrentId').val(currentId);
+                }
+            });
+            $('body').on('click', '.btnCapNhatSP', function () {
+                var _id = $(this).data('id');
+                var gbSP = $('input[name="LProduct[' + _id + '].GiaBanSP"]').val();
+                var slSP = $('input[name="LProduct[' + _id + '].SoLuongSP"]').val();
+                if (slSP == "0" && _id == 1) {
+                    $('#TongTienHD').val(0);
+                } else {
+                    var tt = $('#TongTienHD').val();
+                    tt = parseFloat(tt);
+                    tt -= parseFloat(gbSP);
+                    tt += (parseFloat(gbSP) * parseFloat(slSP));
+                    $('#TongTienHD').val(tt);
+                }
+            });
+        });
+        function updateRowvsIndex() {
+            var examsTable = document.getElementById('tbHtml');
+            var rows = examsTable.getElementsByTagName('tr');
+            console.log(rows);
+            for (var i = 0; i < rows.length; i++) {
+                // Cập nhật ID của các dòng
+                rows[i].id = 'trow_' + i;
+
+                // Cập nhật giá trị data-id của nút xóa
+                var deleteButton = rows[i].querySelector('.btnXoaSP');
+                if (deleteButton !== null) {
+                    deleteButton.setAttribute('data-id', i);
+                }
+
+                // Cập nhật giá trị index của LProduct
+                var inputs = rows[i].querySelectorAll('input[name^="LProduct"]');
+                for (var j = 0; j < inputs.length; j++) {
+                    var currentName = inputs[j].name.split(".")[1];
+                    var newName = "LProduct[" + i + "]." + currentName;
+                    inputs[j].name = newName;
+                }
+            }
+        }
+
+    </script>
+
+    @*lấy mã khách hàng*@
+    <script>
+        $(document).ready(function () {
+            $('input[name="TenKhachHang"]').on('input', function () {
+                var selectedOption = $('#exampleList option[value="' + $(this).val() + '"]');
+                if (selectedOption.length > 0) {
+                    var maKhachHang = selectedOption.data('value');
+                    $('#MaKhachHang').val(maKhachHang);
+                } else {
+                    // Xử lý trường hợp không tìm thấy giá trị
+                    $('#MaKhachHang').val('');
+                }
+            });
+        });
+    </script>
+}

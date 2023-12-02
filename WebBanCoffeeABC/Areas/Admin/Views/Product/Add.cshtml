@@ -1,0 +1,353 @@
+﻿@model WebBanCoffeeABC.Models.tDanhMucSP
+@using WebBanCoffeeABC.Models
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var i = 0;
+    var k = 0;
+
+    List<tNguyenLieu> p = ViewBag.Ingredient;
+    var ListSp = p.Select(item => new
+    {
+        item.MaNguyenLieu,
+        item.TenNguyenLieu,
+        item.ConLai,
+        item.GiaMua,
+        item.DonViTinh,
+    }).ToList();
+
+    var LP = Newtonsoft.Json.JsonConvert.SerializeObject(ListSp);
+}
+
+<div class="card">
+    <div class="card-header">
+        <h1 style="display:flex; justify-content:center;">QUẢN LÝ SẢN PHẨM</h1>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="forms-sample" action="/admin/product/add" method="post">
+                    <div class="card">
+                        <div class="card-header p-2">
+                            <ul class="nav nav-pills">
+                                <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Thông Tin Sản Phẩm</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Hình Ảnh</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Kích Thước</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#ingredients" data-toggle="tab">Nguyên Liệu</a></li>
+                            </ul>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="active tab-pane" id="activity">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Tên Sản Phẩm</label>
+                                        <input type="text" name="TenSP" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Loại Sản Phẩm</label>
+                                        <select name="MaLoai" class="form-control">
+                                            <option value="">-Chọn Loại Sản Phẩm-</option>
+                                            @foreach (var item in ViewBag.ProductType as SelectList)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Hãng Sản Xuất</label>
+                                        <select name="MaHangSX" class="form-control">
+                                            <option value="">-Chọn Hãng Sản Xuất-</option>
+                                            @foreach (var item in ViewBag.Manufacturer as SelectList)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Giới Thiệu Sản Phẩm</label>
+                                        <textarea class="form-control" id="txtDetail" name="GioiThieuSP"></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Giá Gốc</label>
+                                                <input type="text" class="form-control" name="GiaGoc" placeholder="Nhập giá gốc..." value="0.0" />
+                                            </div>
+                                        </div>
+@*                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Giá Bán</label>
+                                                <input type="text" class="form-control" name="GiaBan" placeholder="Nhập giá bán..." value="0.0" />
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Giá Khuyến Mãi</label>
+                                                <input type="text" class="form-control" name="GiaKhuyenMai" placeholder="Nhập giá khuyến mãi..." value="0.0" />
+                                            </div>
+                                        </div>*@
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="timeline">
+                                    <!-- The timeline -->
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <input type="button" style="float:right;" class="btn btn-primary" id="iTaiAnh" onclick="BrowseServer();" value="Tải Ảnh" />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <table class="table table-hover" id="tbAnhSanPham">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">#</th>
+                                                        <th class="text-center">Ảnh Sản Phẩm</th>
+                                                        <th class="text-center">Mặc Định</th>
+                                                        <th class="text-center">Thao Tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbHtml">
+                                                </tbody>
+                                            </table>
+                                            <input type="hidden" id="tCurrentId" value="0" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="settings">
+                                    <div class="row">
+                                        <table>
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th>Tên Kích Thước</th>
+                                                    <th>Giá Bán</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Exams">
+                                                <tr class="text-center" id="Exam">
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" name="LProduct[@i].KichThuoc" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" name="LProduct[@i].GiaBan" value="0.0" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" name="LProduct[@i].GiaKhuyenMai" value="0.0" />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <a href="#" class="btn btn-primary" onclick="ThemCauHoi()" style="float: right">Thêm Kích Cỡ</a>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="ingredients">
+                                    <div class="row">
+                                        <table>
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th>Mã Nguyên Liệu</th>
+                                                    <th>Tên Nguyên Liệu</th>
+                                                    <th>Đơn Vị Tính</th>
+                                                    <th>Khối Lượng (g | ml)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Exams1">
+                                                <tr class="text-center" id="Exam1">
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" name="IP[@k].MaNguyenLieu" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <input list="Titles" id="Title" class="form-control" name="IP[@k].TenNguyenLieu">
+                                                            <datalist id="Titles">
+                                                                <option value="">
+                                                            </datalist>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" name="IP[@k].DonViTinh" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" name="IP[@k].Luong" />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <a href="#" class="btn btn-primary" onclick="ThemCauHoi1()" style="float: right">Thêm Kích Cỡ</a>
+                                </div>
+                            </div>
+                            <!-- /.tab-content -->
+                        </div><!-- /.card-body -->
+                        <div class="form-group">
+                            <a href="/admin/product" class="btn btn-light">Quay Lại</a>
+                            <button type="submit" class="btn btn-success">Thêm Mới</button>
+                        </div>
+                    </div> <!-- /.card -->
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+    </div>
+    <!-- /.card-footer-->
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('txtDetail', {
+                customConfig: '/content/ckeditor/config.js',
+                extraAllowedContent: 'span',
+            });
+
+            $('body').on('click', '.btnXoaAnh', function () {
+                var conf = confirm('Bạn có muốn xóa ảnh này không?');
+                if (conf === true) {
+                    var _id = $(this).data('id');
+                    $('#trow_' + _id).fadeTo('fast', 0.5, function () {
+                        $(this).slideUp('fast', function () { $(this).remove(); });
+                    });
+                    var temp = $('#tCurrentId').val();
+                    var currentId = parseInt(temp) - 1;
+                    $('#tCurrentId').val(currentId);
+                }
+            });
+        });
+
+        function BrowseServer(field) {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                addImageProduct(fileUrl);
+            };
+            finder.popup();
+        }
+
+        function addImageProduct(url) {
+            var temp = $('#tCurrentId').val();
+            var currentId = parseInt(temp) + 1;
+            var str = "";
+            if (currentId == 1) {
+                str += `<tr id="trow_${currentId}">
+                                        <td class="text-center">${currentId}</td>
+                                        <td class="text-center"><img src="${url}" style="width:100px; height:100px; border-radius: unset;"/> <input type='hidden' value="${url}" name="Images"/></td>
+                                        <td class="text-center"><input type="radio"  value ="${currentId}" name="rDefault" checked= "checked"/></td>
+                                        <td class="text-center"><a href="#" data-id="${currentId}" class="btn btn-sm btn-danger btnXoaAnh">Xóa</a></td>
+                                    </tr>`;
+            }
+            else {
+                str += `<tr id="trow_${currentId}">
+                                        <td class="text-center">${currentId}</td>
+                                        <td class="text-center"><img src="${url}" style="width:100px; height:100px; border-radius: unset;"/> <input type='hidden' value="${url}" name="Images"/></td>
+                                        <td class="text-center"><input type="radio" name="rDefault" value ="${currentId}"/></td>
+                                        <td class="text-center"><a href="#" data-id="${currentId}" class="btn btn-sm btn-danger btnXoaAnh">Xóa</a></td>
+                                    </tr>`;
+            }
+            $('#tbHtml').append(str);
+            $('#tCurrentId').val(currentId);
+        }
+    </script>
+
+    <script>
+        var i = 0;
+        function ThemCauHoi() {
+
+            i += 1; // Tăng giá trị i lên 1
+
+            console.log("i sau khi tăng lên 1: " + i);
+
+            var examsForm = document.getElementById('Exams');
+            var examClone = document.getElementById('Exam').cloneNode(true);
+            var inputFields = examClone.getElementsByTagName('input');
+
+            // Cập nhật name của trường input để chứa giá trị mới của i
+            for (var j = 0; j < inputFields.length; j++) {
+                inputFields[j].name = "LProduct[" + i + "]." + inputFields[j].name.split(".")[1];
+                inputFields[j].value = '';
+            }
+            // Thêm bản sao vào Exams
+            examsForm.appendChild(examClone);
+        }
+    </script>
+
+    <script>
+        var Lquestion = @Html.Raw(LP);
+
+        const currentTime = document.querySelector("h1"),
+            content = document.querySelector(".content"),
+            selectMenu = document.querySelectorAll("datalist"),
+            setAlarmBtn = document.querySelector("button");
+
+        for (let i = 0; i < Lquestion.length; i++) {
+            let option = `<option value="${Lquestion[i].TenNguyenLieu}">`;
+            selectMenu[0].firstElementChild.insertAdjacentHTML("afterend", option);
+        }
+
+        console.log(Lquestion);
+
+        document.getElementById("Title").addEventListener("input", function () {
+
+            var selectedValue = this.value; // Lấy giá trị mà bạn chọn trong input
+            var selectedObject = Lquestion.find(function (item) {
+                return item.TenNguyenLieu === selectedValue;
+            });
+            var item = this.parentElement.parentElement.parentElement;
+            var Einput = item.getElementsByTagName('INPUT');
+            console.log(selectedObject.MaNguyenLieu);
+            Einput[0].value = selectedObject.MaNguyenLieu;
+            Einput[2].value = selectedObject.DonViTinh;
+        });
+    </script>
+    <script>
+        var k = 0;
+        function ThemCauHoi1() {
+
+            k += 1; // Tăng giá trị i lên 1
+
+            console.log("i sau khi tăng lên 1: " + k);
+
+            var examsForm = document.getElementById('Exams1');
+            var examClone = document.getElementById('Exam1').cloneNode(true);
+            var inputFields = examClone.getElementsByTagName('input');
+
+            // Cập nhật name của trường input để chứa giá trị mới của i
+            for (var j = 0; j < inputFields.length; j++) {
+                inputFields[j].name = "IP[" + k + "]." + inputFields[j].name.split(".")[1];
+                inputFields[j].value = '';
+            }
+            // Thêm bản sao vào Exams
+            examsForm.appendChild(examClone);
+
+            var newTitleInput = examClone.querySelector('input[name="IP[' + k + '].TenNguyenLieu"]');
+            newTitleInput.addEventListener("input", function () {
+                var selectedValue = this.value; // Lấy giá trị mà bạn chọn trong input
+                var selectedObject = Lquestion.find(function (item) {
+                    return item.TenNguyenLieu === selectedValue;
+                });
+                var item = this.parentElement.parentElement.parentElement;
+                var Einput = item.getElementsByTagName('INPUT');
+                //console.log(selectedObject.MaNguyenLieu + " abcd");
+                console.log(this);
+                Einput[0].value = selectedObject.MaNguyenLieu;
+                Einput[2].value = selectedObject.DonViTinh;
+
+                //console.log(Einput[0] + " e0");
+            });
+        }
+    </script>
+}

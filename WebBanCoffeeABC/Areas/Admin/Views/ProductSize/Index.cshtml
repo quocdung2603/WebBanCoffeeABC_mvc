@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebBanCoffeeABC.Models.tKichThuoc>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutEmpty.cshtml";
+}
+<style>
+    .glImage {
+        list-style: none;
+        margin-top: 0;
+        padding: 0;
+        display: flex;
+    }
+
+        .glImage li {
+            display: inline-block;
+            position: relative;
+        }
+
+    .box-btn {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+</style>
+<section class="content">
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th>STT</th>
+                        <th>Mã Kích Cỡ</th>
+                        <th>Kích Cỡ</th>
+                        <th>Giá Bán</th>
+                        <th>Giá Khuyến Mãi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        var i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr id="trow_@item.Id" class="text-center">
+                                <td>@i</td>
+                                <td>@item.MaKichThuoc</td>
+                                <td>@item.KichThuoc</td>
+                                <td>@item.GiaBan</td>
+                                <td>@item.GiaKhuyenMai</td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4">Không có bản ghi nào!</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

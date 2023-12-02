@@ -1,0 +1,219 @@
+﻿@model IEnumerable<WebBanCoffeeABC.Models.tDanhMucSP>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+@section naviheader{
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo" href="index.html"><img src="~/Content/assets/images/logo.svg" alt="logo" /></a>
+        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="~/Content/assets/images/logo-mini.svg" alt="logo" /></a>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-stretch">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+        </button>
+        <div class="search-field d-none d-md-block col-4">
+            <form class="d-flex align-items-center h-100" action="#">
+                <div class="input-group">
+                    <div class="input-group-prepend bg-transparent">
+                        <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                    </div>
+                    <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                </div>
+            </form>
+        </div>
+        <ul class="navbar-nav navbar-nav-right col-4">
+            <li class="nav-item nav-profile dropdown">
+                <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="nav-profile-img">
+                        <img src="~/Content/assets/images/faces/face1.jpg" alt="image">
+                        <span class="availability-status online"></span>
+                    </div>
+                    <div class="nav-profile-text">
+                        <p class="mb-1 text-black">David Greymaax</p>
+                    </div>
+                </a>
+                <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                    <a class="dropdown-item" href="#">
+                        <i class="mdi mdi-cached me-2 text-success"></i> Activity Log
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <i class="mdi mdi-logout me-2 text-primary"></i> Signout
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item d-none d-lg-block full-screen-link">
+                <a class="nav-link">
+                    <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="mdi mdi-email-outline"></i>
+                    <span class="count-symbol bg-warning"></span>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                    <i class="mdi mdi-bell-outline"></i>
+                    <span class="count-symbol bg-danger"></span>
+                </a>
+            </li>
+            <li class="nav-item nav-logout d-none d-lg-block">
+                <a class="nav-link" href="#">
+                    <i class="mdi mdi-power"></i>
+                </a>
+            </li>
+            <li class="nav-item nav-settings d-none d-lg-block">
+                <a class="nav-link" href="#">
+                    <i class="mdi mdi-format-line-spacing"></i>
+                </a>
+            </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+        </button>
+    </div>
+}
+
+<div class="card">
+    <div class="card-header">
+        <h1 style="display:flex; justify-content:center;">QUẢN LÝ SẢN PHẨM</h1>
+    </div>
+    <div class="card-body">
+        <div class="row" style="margin-bottom:15px;">
+            <div class="col-6" style="display:flex; align-items:center;">
+                <h3 class="card-title">Danh Sách Sản Phẩm</h3>
+            </div>
+            <div class="card-tools col-6">
+                <a href="/admin/product/add" class="btn btn-primary" style="float:right;margin-right:15px;">Thêm Mới</a>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr class="text-center">
+                    <th>STT</th>
+                    <th>Ảnh Sản Phẩm</th>
+                    <th>Mã Sản Phẩm</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Kích Cỡ</th>
+                    <th>Nguyên Liệu</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    var i = 0;
+                    foreach (var item in Model)
+                    {
+                        var strImg = "";
+                        var img = item.tAnhSPs.FirstOrDefault(x => x.MaSP == item.MaSP && x.AnhMacDinh == true);
+                        if (img != null)
+                        {
+                            strImg = img.TenFileAnh;
+                        }
+                        <tr class="table-info text-center" id="trow_@item.MaSP">
+                            <td> @(i+1)</td>
+                            <td><img src="@strImg" alt="@strImg" style="height: 100px; width: 100px; border-radius:unset;" /></td>
+                            <td> @item.MaSP </td>
+                            <td> @item.TenSP</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-primary btnSizeProduct" data-id="@item.MaSP"><i class="mdi mdi-eye"></i></a>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-primary btnIngredientProduct" data-id="@item.MaSP"><i class="mdi mdi-eye"></i></a>
+                            </td>
+                            <td>
+                                <a href="/admin/product/detail/@item.MaSP" class="btn btn-sm btn-success"><i class="mdi mdi-eye"></i></a>
+                                <a href="/admin/product/edit/@item.MaSP" class="btn btn-sm btn-warning"><i class="mdi mdi-pen"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger btnDelete" data-id="@item.MaSP"><i class="mdi mdi-delete"></i></a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">Hiện tại chưa có sản phẩm nào</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="dialog">
+    <iframe id="myIframe" style="border:0; width:100%; height:100%;"></iframe>
+</div>
+
+<div id="dialog1">
+    <iframe id="myIframe1" style="border:0; width:100%; height:100%;"></iframe>
+</div>
+@section scripts {
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#dialog").dialog({
+                autoOpen: false,
+                show: "fade",
+                hide: "fade",
+                modal: true,
+                height: '600',
+                width: '700',
+                resizable: true,
+                title: '',
+                close: function () {
+                    window.location.reload();
+                }
+            });
+            $('body').on("click", ".btnSizeProduct", function () {
+                var proid = $(this).attr("data-id");
+                $("#dialog #myIframe").attr("src", "/admin/ProductSize/Index?id=" + proid);
+                $('#dialog').dialog('open');
+                return false;
+            });
+
+            $("#dialog1").dialog({
+                autoOpen: false,
+                show: "fade",
+                hide: "fade",
+                modal: true,
+                height: '600',
+                width: '700',
+                resizable: true,
+                title: '',
+                close: function () {
+                    window.location.reload();
+                }
+            });
+            $('body').on("click", ".btnIngredientProduct", function () {
+                var proid = $(this).attr("data-id");
+                $("#dialog1 #myIframe1").attr("src", "/admin/manufacturer/_NguyenLieuSp?id=" + proid);
+                $('#dialog1').dialog('open');
+                return false;
+            });
+
+            $('body').on('click', '.btnDelete', function () {
+                var id = $(this).data('id');
+                var conf = confirm("Bạn có chắc muốn thực hiện hành động này không?");
+                if (conf === true) {
+                    $.ajax({
+                        url: '/admin/product/delete',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                $('#trow_' + id).remove();
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+}

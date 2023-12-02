@@ -1,0 +1,160 @@
+﻿@model WebBanCoffeeABC.Models.tNhanVien
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section naviheader{
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo" href="index.html"><img src="~/Content/assets/images/logo.svg" alt="logo" /></a>
+        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="~/Content/assets/images/logo-mini.svg" alt="logo" /></a>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-stretch">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+        </button>
+        <div class="search-field d-none d-md-block col-4">
+            <form class="d-flex align-items-center h-100" action="#">
+                <div class="input-group">
+                    <div class="input-group-prepend bg-transparent">
+                        <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                    </div>
+                    <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                </div>
+            </form>
+        </div>
+        <ul class="navbar-nav navbar-nav-right col-4">
+            <li class="nav-item nav-profile dropdown">
+                <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="nav-profile-img">
+                        <img src="~/Content/assets/images/faces/face1.jpg" alt="image">
+                        <span class="availability-status online"></span>
+                    </div>
+                    <div class="nav-profile-text">
+                        <p class="mb-1 text-black">David Greymaax</p>
+                    </div>
+                </a>
+                <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                    <a class="dropdown-item" href="#">
+                        <i class="mdi mdi-cached me-2 text-success"></i> Activity Log
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <i class="mdi mdi-logout me-2 text-primary"></i> Signout
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item d-none d-lg-block full-screen-link">
+                <a class="nav-link">
+                    <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="mdi mdi-email-outline"></i>
+                    <span class="count-symbol bg-warning"></span>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                    <i class="mdi mdi-bell-outline"></i>
+                    <span class="count-symbol bg-danger"></span>
+                </a>
+            </li>
+            <li class="nav-item nav-logout d-none d-lg-block">
+                <a class="nav-link" href="#">
+                    <i class="mdi mdi-power"></i>
+                </a>
+            </li>
+            <li class="nav-item nav-settings d-none d-lg-block">
+                <a class="nav-link" href="#">
+                    <i class="mdi mdi-format-line-spacing"></i>
+                </a>
+            </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+        </button>
+    </div>
+}
+<div class="card">
+    <div class="card-header">
+        <h1 style="display:flex; justify-content:center;">QUẢN LÝ NHÂN VIÊN</h1>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Phiếu sửa thông tin nhân viên</h4>
+        <form class="forms-sample" action="/admin/user/edit" method="post">
+            <p class="card-description"> *** Thông Tin Các Nhân *** </p>
+            <div class="form-group">
+                <label for="exampleInputName1">Họ và tên</label>
+                <input type="text" class="form-control"  placeholder="Họ và tên..." name="TenNhanVien" value="@Model.TenNhanVien">
+                <input type="hidden" name="MaNhanVien" value="@Model.MaNhanVien"/>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail3">Ngày Sinh</label>
+                <input type="hidden" value="@Model.NgaySinh" name="NgaySinh"/>
+                <input type="date" class="form-control"  value="@string.Format("{0:yyyy-MM-dd}",Model.NgaySinh)">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword4">Số Điện Thoại</label>
+                <input type="text" class="form-control"  placeholder="Số Điện Thoại" name="SoDienThoai" value="@Model.SoDienThoai">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword4">Địa Chỉ</label>
+                <input type="text" class="form-control"  placeholder="Địa Chỉ" name="DiaChi" value="@Model.DiaChi">
+            </div>
+            <div class="form-group">
+                <label for="exampleSelectGender">Chức Vụ</label>
+                <select class="form-control" id="exampleSelectGender" name="ChucVu">
+                    <option>@Model.ChucVu</option>
+                    <option>Thu Ngân</option>
+                    <option>Pha Chế</option>
+                    <option>Giao Hàng</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Ảnh Đại Diện</label>
+                <div class="input-group col-xs-12">
+                    <input type="text" class="form-control file-upload-info" placeholder="Upload Image" id="txtImage" name="AnhDaiDien" value="@Model.AnhDaiDien">
+                    <span class="input-group-append">
+                        <input class="file-upload-browse btn btn-gradient-primary" type="button" onclick="BrowseServer('txtImage');" value="Upload" />
+                    </span>
+                </div>
+            </div>
+            <p class="card-description"> *** Thông Tin Tài Khoản *** </p>
+            <div class="form-group">
+                <label for="exampleInputName1">Tài Khoản</label>
+                <input type="text" class="form-control"  placeholder="Tài khoản ... " name="username" value="@Model.username" readonly>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputName1">Mật Khẩu</label>
+                <input type="password" class="form-control" placeholder="Mật khẩu ... " name="password" value="@Model.tUser.password">
+            </div>
+            <p class="card-description"> *** Ghi Chú *** </p>
+            <div class="form-group">
+                <label for="exampleTextarea1">Ghi Chú</label>
+                <textarea class="form-control"  rows="4" name="GhiChu" value="@Model.GhiChu"></textarea>
+            </div>
+            <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+            <a href="/admin/user/index_staff" class="btn btn-light">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('txtDetail', {
+                customConfig: '/content/ckeditor/config.js',
+                extraAllowedContent: 'span',
+            });
+        });
+
+        function BrowseServer(field) {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                document.getElementById(field).value = fileUrl;
+            };
+            finder.popup();
+        }
+    </script>
+}
