@@ -18,10 +18,11 @@ namespace WebBanCoffeeABC.Controllers
         public ActionResult Logout()
         {
             Session["tUser"] = null;
-            return RedirectToAction("Index","ABCHome");
+            return RedirectToAction("Index", "ABCHome");
         }
         public ActionResult Information(int id)
         {
+
             return View();
         }
     }

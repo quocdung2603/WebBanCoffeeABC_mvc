@@ -18,8 +18,10 @@ namespace WebBanCoffeeABC.Controllers
         [HttpPost]
         public ActionResult Login(FormCollection f)
         {
-            string UserName = f["UserName"].ToString();
-            string Password = f["Password"].ToString();
+            var UserName = f["UserName"];
+            var Password = f["Password"];
+            Session["UserName"] = "";
+            Session["Password"] = "";
             tUser user = db.tUsers.SingleOrDefault(n => n.username == UserName && n.password == Password);
             if (user == null)
             {
@@ -29,8 +31,14 @@ namespace WebBanCoffeeABC.Controllers
 
                 return Redirect("Login");
             }
-            Session["User"] = user;
-            return RedirectToAction("Index", "CozaHome");
+            else
+            {
+                Session["tUser"] = user;
+                Session["UserName1"] = UserName;
+                Session["Password1"] = Password;
+                return RedirectToAction("Index", "ABCHome");
+            }
+
         }
     }
 }

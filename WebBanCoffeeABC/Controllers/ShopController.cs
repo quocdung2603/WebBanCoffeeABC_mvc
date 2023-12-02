@@ -11,12 +11,12 @@ namespace WebBanCoffeeABC.Controllers
     {
         QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
         // GET: Shop
-        public ActionResult Shop()
+        public ActionResult Shop()// xo danh sach
         {
             return View(db.tDanhMucSPs.ToList());
         }
         [HttpPost]
-        public ActionResult Shop(FormCollection f)
+        public ActionResult Shop(FormCollection f)// search san pham
         {
             string item = f["search"].ToString();
             var product = db.tDanhMucSPs.Where(n => n.TenSP.Contains(item)).ToList();

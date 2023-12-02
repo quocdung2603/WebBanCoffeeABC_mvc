@@ -1,0 +1,22 @@
+﻿@model IEnumerable<WebBanCoffeeABC.Models.tLoaiSP>
+
+<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+    All TypeDrink
+</button>
+@foreach (var item in Model)
+{
+    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 " data-filter="@item.MaLoai">
+        @item.Loai
+        
+    </button>
+    
+
+    @*<div class="col">
+        @Html.Action("ShowP", "ABCHome", new { id = item.MaLoai })
+    </div>*@
+
+}
+
+
+
+

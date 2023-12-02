@@ -1,6 +1,8 @@
 ﻿@using WebBanCoffeeABC.Models;
+
 @{
     tUser user = Session["User"] as tUser;
+    QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
 }
 <!DOCTYPE html>
 <html>
@@ -53,13 +55,13 @@
                     </div>
 
                     <div class="right-top-bar flex-w h-full">
-                        <a href="@Url.Action("Contact","CozaHome")" class="flex-c-m trans-04 p-lr-25">
+                        <a href="@Url.Action("Contact","ABCHome")" class="flex-c-m trans-04 p-lr-25">
                             Help & FAQs
                         </a>
 
-                        @*@if (user != null)
+                        @if (Session["tUser"] != null)
                         {
-                            <a href="@Url.Action("Information","Users",new {id = user.Userid })" class="flex-c-m trans-04 p-lr-25">
+                            <a href="#" class="flex-c-m trans-04 p-lr-25">
                                 My Account
                             </a>
                         }
@@ -69,12 +71,12 @@
                                 My Account
                             </a>
                         }
-                        @if (user != null)
+                        @if (Session["tUser"] != null)
                         {
-                            <a href="@Url.Action("MyOrder","Users",new {id = user.Userid })" class="flex-c-m trans-04 p-lr-25">
+                            <a href="#" class="flex-c-m trans-04 p-lr-25">
                                 My Order
                             </a>
-                            <a href="@Url.Action("Logout","Users",new {id = user.Userid })" class="flex-c-m trans-04 p-lr-25">
+                            <a href="@Url.Action("Logout","Users")" class="flex-c-m trans-04 p-lr-25">
                                 Logout
                             </a>
                         }
@@ -83,7 +85,7 @@
                             <a href="@Url.Action("Login","Login")" class="flex-c-m trans-04 p-lr-25">
                                 My Order
                             </a>
-                        }*@
+                        }
 
                     </div>
                 </div>
@@ -93,8 +95,8 @@
                 <nav class="limiter-menu-desktop container">
 
                     <!-- Logo desktop -->
-                    <a href="@Url.Action("Index","CozaHome")" class="logo">
-                        <img src="~/Asset/images/icons/logo-01.png" alt="IMG-LOGO">
+                    <a href="@Url.Action("Index","ABCHome")" class="logo">
+                        <img src="~/Content/assets/images/ABCCoffeeLogo1.png" alt="IMG-LOGO">
                     </a>
 
                     <!-- Menu desktop -->
@@ -137,10 +139,30 @@
                         }
                         else
                         {
-                            <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-l-22 m-t-6">
-                                <img src="/Uploads/images/AnhDaiDienNhanVien/Hinh3x4" alt="AVATAR">
-                            </div>
+                            var xx = Session["UserName1"].ToString();
+                            var y = Session["Password1"].ToString();
+                            var u = db.tUsers.FirstOrDefault(x => x.username == xx && x.password == y);
+                            if (u != null)
+                            {
+                                var kh = db.tKhachHangs.FirstOrDefault(x => x.username == u.username);
+                                if (kh != null)
+                                {
+                                    <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-l-22 m-t-6">
+                                        <img src="@kh.AnhDaiDien" alt="AVATAR">
+                                    </div>
+                                }
+                                else
+                                {
+                                    var nv = db.tNhanViens.FirstOrDefault(x => x.username == u.username);
+                                    if (nv != null)
+                                    {
+                                        <div @*class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-l-22 m-t-6"*@>
+                                            <img src="@nv.AnhDaiDien" alt="AVATAR" style="width:60px ; height:60px;border-radius:30px;">
+                                        </div>
+                                    }
+                                }
 
+                            }
                         }
                     </div>
                 </nav>
@@ -195,10 +217,10 @@
 
                         @*@if (user != null)
                         {
-                            <a href="@Url.Action("Information","Users",new {id = user.Userid })" class="flex-c-m trans-04 p-lr-25">
+                            <a href="@Url.Action("Information","Users",new {id = tUser.Userid })" class="flex-c-m trans-04 p-lr-25">
                                 My Account
                             </a>
-                            <a href="@Url.Action("Information","Users",new {id = user.Userid })" class="flex-c-m trans-04 p-lr-25">
+                            <a href="@Url.Action("Information","Users",new {id = tUser.Userid })" class="flex-c-m trans-04 p-lr-25">
                                 Logout
                             </a>
                         }
