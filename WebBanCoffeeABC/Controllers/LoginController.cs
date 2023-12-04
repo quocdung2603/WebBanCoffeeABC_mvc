@@ -38,7 +38,6 @@ namespace WebBanCoffeeABC.Controllers
                 Session["Password1"] = Password;
                 return RedirectToAction("Index", "ABCHome");
             }
-
         }
     }
 }

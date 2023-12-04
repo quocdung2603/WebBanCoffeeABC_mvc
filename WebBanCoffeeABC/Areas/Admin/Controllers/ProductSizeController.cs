@@ -13,6 +13,10 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
         // GET: Admin/ProductSize
         public ActionResult Index(string id)
         {
+            if (Session["Admin"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var items = db.tKichThuocs.Where(x => x.MaSP == id).ToList();
             return View(items);
         }

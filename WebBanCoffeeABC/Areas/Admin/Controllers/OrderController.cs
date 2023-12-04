@@ -14,6 +14,10 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
         // GET: Admin/Order
         public ActionResult Index(int? page)
         {
+            if (Session["Admin"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var pageSize = 5;
             if (page == null)
             {

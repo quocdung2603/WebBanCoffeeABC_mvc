@@ -14,6 +14,10 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
         // GET: Admin/User
         public ActionResult Index_Customer(int ? page)
         {
+            if (Session["Admin"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var pageSize = 5;
             if (page == null)
             {
@@ -28,6 +32,10 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
         }
         public ActionResult Index_Staff(int? page)
         {
+            if (Session["Admin"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var pageSize = 5;
             if (page == null)
             {
@@ -45,7 +53,6 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
         {
             return View();
         }
-
         [HttpPost]
         public ActionResult Add(FormCollection f)
         {
@@ -123,6 +130,54 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
             nv.GhiChu = f["GhiChu"];
             db.SaveChanges();
             return RedirectToAction("Index_Staff");
+        }
+
+
+        //Login  - Logout
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(FormCollection f)
+        {
+            var UserName = f["UserName"];
+            var Password = f["Password"];
+            Session["Admin"] = new tUser();
+            if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(Password))
+            {
+                ViewBag.Error = "Tài khoản hoặc mật khẩu không được để trống";
+                Redirect("Login");
+            }
+            tUser u = db.tUsers.FirstOrDefault(x => x.username == UserName && x.password == Password);
+            if (u != null)
+            {
+                var nv = db.tNhanViens.FirstOrDefault(x => x.username == u.username);
+                if(nv != null)
+                {
+                    Session["Admin"] = u;
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.Error = "Tài Khoản hoặc mật khẩu không đúng";
+                    return Redirect("Login");
+                }
+            }
+            else
+            {
+                ViewBag.Error = "Tài Khoản hoặc mật khẩu không đúng";
+                return Redirect("Login");
+            }
+        }
+
+        [HttpPost]  
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOut()
+        {
+            Session["Admin"] = null;
+            return RedirectToAction("Login","User");
         }
     }
 }

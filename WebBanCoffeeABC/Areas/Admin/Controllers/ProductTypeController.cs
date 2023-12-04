@@ -12,6 +12,10 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
         // GET: Admin/ProductType
         public ActionResult Index()
         {
+            if (Session["Admin"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var items = db.tLoaiSPs.ToList();
             return View(items);
         }

@@ -1,19 +1,28 @@
-﻿<nav class="sidebar sidebar-offcanvas" id="sidebar">
+﻿@using WebBanCoffeeABC.Models;
+@{ 
+    QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
+    tUser u = (tUser)Session["Admin"];
+    var nv = db.tNhanViens.FirstOrDefault(x => x.username == u.username);
+}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
-        <li class="nav-item nav-profile">
-            <a href="#" class="nav-link">
-                <div class="nav-profile-image">
-                    <img src="~/Content/assets/images/faces/face1.jpg" alt="profile">
-                    <span class="login-status online"></span>
-                    <!--change to offline or busy as needed-->
-                </div>
-                <div class="nav-profile-text d-flex flex-column">
-                    <span class="font-weight-bold mb-2">David Grey. H</span>
-                    <span class="text-secondary text-small">Project Manager</span>
-                </div>
-                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
-            </a>
-        </li>
+        @if (Session["Admin"] != null)
+        {
+            <li class="nav-item nav-profile">
+                <a href="#" class="nav-link">
+                    <div class="nav-profile-image">
+                        <img src="@nv.AnhDaiDien" alt="profile">
+                        <span class="login-status online"></span>
+                        <!--change to offline or busy as needed-->
+                    </div>
+                    <div class="nav-profile-text d-flex flex-column">
+                        <span class="font-weight-bold mb-2">@nv.TenNhanVien</span>
+                        <span class="text-secondary text-small">@nv.ChucVu</span>
+                    </div>
+                    <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                </a>
+            </li>
+        }
         <li class="nav-item">
             <a class="nav-link" href="/admin/home/">
                 <span class="menu-title">Trang Chủ</span>
@@ -71,3 +80,4 @@
         </li>
     </ul>
 </nav>
+

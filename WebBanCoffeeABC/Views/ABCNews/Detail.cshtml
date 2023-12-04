@@ -1,0 +1,17 @@
+﻿@model WebBanCoffeeABC.Models.tTinTuc
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="newsTitle" style="margin-top:20px;"><h1>@Model.TenTinTuc</h1><hr /></div>
+            <div class="newsDate"><span>@Model.NgayTao</span></div>
+            <div class="the-content desc" style="margin-bottom:20px;">
+                @Html.Raw(Model.NoiDung)
+            </div>
+        </div>
+    </div>
+</div>
