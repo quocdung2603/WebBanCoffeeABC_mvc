@@ -3705,7 +3705,7 @@ iframe {border: none;}
 }
 
 .hidden-scroll::-webkit-scrollbar {
-	display: none;
+	/*display: none;*/
 }
 
 /*---------------------------------------------*/

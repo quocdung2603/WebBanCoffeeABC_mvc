@@ -11,9 +11,10 @@ namespace WebBanCoffeeABC.Controllers
     {
         QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
         // GET: ABCHome
-        public ActionResult Index()
+        public ActionResult Index(FormCollection f)
         {
-            return View();
+            return View(db.tDanhMucSPs.ToList());
+
         }
         public ActionResult About()
         {
@@ -23,18 +24,23 @@ namespace WebBanCoffeeABC.Controllers
         {
             return View();
         }
-        public ActionResult ProductDetails()
+
+        public ActionResult ProductDetails(string MaSP)
         {
-            return View();
+            tDanhMucSP product = db.tDanhMucSPs.FirstOrDefault(n => n.MaSP == MaSP);
+            return View(product);
         }
         public ActionResult TypeCoffee()
         {
             return PartialView(db.tLoaiSPs.ToList());
         }
+
+        [HttpGet]
         public ActionResult ShowP(string id)
         {
             var item = db.tDanhMucSPs.Where(x => x.MaLoai == id);
             return PartialView(item);
         }
+       
     }
 }

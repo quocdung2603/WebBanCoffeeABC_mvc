@@ -1,22 +1,109 @@
 ﻿@model IEnumerable<WebBanCoffeeABC.Models.tLoaiSP>
-
 <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
     All TypeDrink
 </button>
-@foreach (var item in Model)
-{
-    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 " data-filter="@item.MaLoai">
-        @item.Loai
-        
-    </button>
-    
 
-    @*<div class="col">
-        @Html.Action("ShowP", "ABCHome", new { id = item.MaLoai })
-    </div>*@
+<style>
+    .horizontal-list {
+        list-style-type: none;
+        padding: 0;
+    }
 
-}
+        .horizontal-list li {
+            display: inline-block;
+            margin-right: 10px; /* Khoảng cách giữa các phần tử */
+        }
 
+    .product-list {
+        width: 100%;
+        margin-top: 20px;
+    }
 
+    .grid-list {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+    }
 
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+    }
+
+    .product-item {
+        flex: 1 0 calc(20% - 10px);
+        margin: 5px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+
+    .product-image {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<ul class="horizontal-list">
+    <li>
+        <a href="@Url.Action("ShowP","ABCHome",new {id = "LSP1672048552"})" data-id="" style="color:black;margin : 10px;border-bottom:1px solid" class="ChooseTypeDrink">
+            Trà sữa
+        </a>
+    </li>
+    <li>
+        <a href="@Url.Action("ShowP","ABCHome",new {id = "LSP4121452721"})" data-id="" style="color:black;margin : 10px;border-bottom:1px solid" class="ChooseTypeDrink">
+            Nước ép
+        </a>
+    </li>
+    <li>
+        <a href="@Url.Action("ShowP","ABCHome",new {id = "LSP5004451578"})" data-id="" style="color:black;margin : 10px;border-bottom:1px solid" class="ChooseTypeDrink">
+            Cà phê
+        </a>
+    </li>
+    <li>
+        <a href="@Url.Action("ShowP","ABCHome",new {id = "LSP7372114025"})" data-id="" style="color:black;margin : 10px;border-bottom:1px solid" class="ChooseTypeDrink">
+            Nước giải khát
+        </a>
+    </li>
+    <li>
+        <a href="@Url.Action("ShowP","ABCHome",new {id = "LSP8230040033"})" data-id="" style="color:black;margin : 10px;border-bottom:1px solid" class="ChooseTypeDrink">
+            Sinh Tố
+        </a>
+    </li>
+</ul>
+
+@*
+        <input type="hidden" />
+    <div class="product-list" style="display: none;">
+        <div class="grid-list">
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.ChooseTypeDrink').click(function (e) {
+                e.preventDefault();
+                var id = $(this).data('id'); // Lấy giá trị của data-id khi click
+
+                // Sử dụng giá trị dataId để truyền vào hàm Html.Action
+                $.ajax({
+                    url: '@Url.Action("ShowP", "ABCHome")',
+                    type: 'GET',
+                    data: { id: id }, // Truyền giá trị data-id
+                    success: function (response) {
+                        $('.product-list .grid-list').html(response); // Hiển thị danh sách sản phẩm
+                        $('.product-list').show(); // Hiển thị product-list
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+
+*@
 

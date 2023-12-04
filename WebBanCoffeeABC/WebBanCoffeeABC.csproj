@@ -3497,6 +3497,19 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Uploads\images\AnhDaiDienNhanVien\Hinh3x4.jpg" />
+    <Content Include="Uploads\images\AnhSanPham\bac_xiu_cho_nguoi_suy_tinh.jpeg" />
+    <Content Include="Uploads\images\AnhSanPham\banh_bong_lan_xoai.jpeg" />
+    <Content Include="Uploads\images\AnhSanPham\banh_ngot_cha_bong.jpeg" />
+    <Content Include="Uploads\images\AnhSanPham\banh_pho_mai_man.jpeg" />
+    <Content Include="Uploads\images\AnhSanPham\bong_lan_trung_muoi.jpeg" />
+    <Content Include="Uploads\images\AnhSanPham\bong_lan_trung_muoi.jpg" />
+    <Content Include="Uploads\images\AnhSanPham\ca-phe-sua-da-viet-nam.jpg" />
+    <Content Include="Uploads\images\AnhSanPham\cd_sua_nong.jpg" />
+    <Content Include="Uploads\images\AnhSanPham\cf_bong_trung.jpg" />
+    <Content Include="Uploads\images\AnhSanPham\cf_kem.jpg" />
+    <Content Include="Uploads\images\AnhSanPham\cf_muoi_cho_nguoi_nhat.jpeg" />
+    <Content Include="Uploads\images\AnhSanPham\cf_pho_mai_muoi.jpg" />
+    <Content Include="Uploads\images\AnhSanPham\cf_sua_tuoi.jpg" />
     <Content Include="Uploads\_thumbs\Images\AnhDaiDienNhanVien\Hinh3x4.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -3510,13 +3523,13 @@
     <Content Include="Views\ABCHome\About.cshtml" />
     <Content Include="Views\ABCHome\Contact.cshtml" />
     <Content Include="Views\ABCHome\Index.cshtml" />
-    <Content Include="Views\ABCHome\ProductDetails.cshtml" />
-    <Content Include="Views\ABCHome\ShowP.cshtml" />
     <Content Include="Views\ABCHome\TypeCoffee.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shop\Shop.cshtml" />
+    <Content Include="Views\ABCHome\ProductDetails.cshtml" />
+    <Content Include="Views\ABCHome\ShowP.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
