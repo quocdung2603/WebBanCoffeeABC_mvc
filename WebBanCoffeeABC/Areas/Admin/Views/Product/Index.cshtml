@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WebBanCoffeeABC.Models.tDanhMucSP>
+﻿@model PagedList.PagedList<WebBanCoffeeABC.Models.tDanhMucSP>
+@using PagedList;
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -143,6 +145,13 @@
                 }
             </tbody>
         </table>
+    </div>
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-3">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>
+        <div class="col-5"></div>
     </div>
 </div>
 <div id="dialog">

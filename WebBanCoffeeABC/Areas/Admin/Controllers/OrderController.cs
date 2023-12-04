@@ -4,15 +4,26 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebBanCoffeeABC.Models;
+using PagedList;
+using PagedList.Mvc;
 namespace WebBanCoffeeABC.Areas.Admin.Controllers
 {
     public class OrderController : Controller
     {
         QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
         // GET: Admin/Order
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var items = db.tHoaDonBans.ToList();
+            var pageSize = 5;
+            if (page == null)
+            {
+                page = 1;
+            }
+            IEnumerable<tHoaDonBan> items = db.tHoaDonBans.ToList();
+            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            items = items.ToPagedList(pageIndex, pageSize);
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = page;
             return View(items);
         }
         

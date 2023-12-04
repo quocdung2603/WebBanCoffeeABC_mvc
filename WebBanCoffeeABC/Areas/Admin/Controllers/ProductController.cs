@@ -5,17 +5,27 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebBanCoffeeABC.Models;
-
+using PagedList;
+using PagedList.Mvc;
 namespace WebBanCoffeeABC.Areas.Admin.Controllers
 {
     public class ProductController : Controller
     {
         QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
         // GET: Admin/Product
-        public ActionResult Index()
+        public ActionResult Index(int?page)
         {
-            var item = db.tDanhMucSPs;
-            return View(item);
+            var pageSize = 5;
+            if (page == null)
+            {
+                page = 1;
+            }
+            IEnumerable<tDanhMucSP> items = db.tDanhMucSPs.ToList();
+            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            items = items.ToPagedList(pageIndex, pageSize);
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = page;
+            return View(items);
         }
         
         public ActionResult Add()

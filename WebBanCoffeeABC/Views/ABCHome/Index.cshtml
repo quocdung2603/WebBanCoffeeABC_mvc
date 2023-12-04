@@ -1,9 +1,47 @@
-﻿@model IEnumerable<WebBanCoffeeABC.Models.tDanhMucSP>
+﻿@model  IEnumerable<WebBanCoffeeABC.Models.tDanhMucSP>
+@using WebBanCoffeeABC.Models;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
+    var listProduct = db.tDanhMucSPs.ToList();
 }
 
+<section class="section-slide">
+    <div class="wrap-slick1">
+        <button class="arrow-slick1 prev-slick1 slick-arrow" style=""><i class="zmdi zmdi-caret-left"></i></button>
+        <div class="slick1 slick-initialized slick-slider">
+            <div class="slick-list draggable">
+                <div class="slick-track">
+                    <div class="item-slick1 d-block slick-slide" style="background-image: url('../../Content/assets/images/AboutSlider.png'); width:1860px; height:550px;">
+                        <div class="container h-full">
+                            <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+                                <div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
+                                    <span class="ltext-101 cl2 respon2">
+                                        ABC COFFEE
+                                    </span>
+                                </div>
+
+                                <div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="800">
+                                    <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
+                                        CAPUCHINO
+                                    </h2>
+                                </div>
+
+                                <div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
+                                    <a href="/Shop/Shop" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04" tabindex="-1">
+                                        SHOP NOW
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="arrow-slick1 next-slick1 slick-arrow" style=""><i class="zmdi zmdi-caret-right"></i></button>
+    </div>
+</section>
 
 <section class="bg0 p-t-23 p-b-140">
     <div class="container">
@@ -15,11 +53,10 @@
 
         <div class="flex-w flex-sb-m p-b-52">
             @*<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-                @Html.Action("TypeShose", "CozaHome")
-            </div>*@
+                    @Html.Action("TypeShose", "CozaHome")
+                </div>*@
 
             <div class="flex-w flex-c-m m-tb-10">
-
                 <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
                     <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
                     <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
@@ -37,11 +74,10 @@
                     <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
                 </div>
             </div>
-
-
         </div>
-        @*
-             <div class="row isotope-grid">
+
+        <div class="row isotope-grid">
+
             @foreach (var item in Model)
             {
                 var strImg = "";
@@ -50,11 +86,10 @@
                 {
                     strImg = Img.TenFileAnh;
                 }
-                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item @item.MaSP">
-                    <!-- Block2 -->
+                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item">
                     <div class="block2">
                         <div class="block2-pic hov-img0">
-                            <img style="width:270px; height:270px;" src="@strImg" alt="IMG-PRODUCT"><!--hinh san pham-->
+                            <img style="width:270px; height:270px;" src="@strImg" alt="IMG-PRODUCT">
 
                             <a href="@Url.Action("ProductDetails","ABCHome", new { MaSP = item.MaSP })" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                                 View
@@ -81,11 +116,9 @@
                         </div>
                     </div>
                 </div>
-
             }
-        </div>
-        *@
 
+        </div>
 
         <!-- Load more -->
         <div class="flex-c-m flex-w w-full p-t-45">

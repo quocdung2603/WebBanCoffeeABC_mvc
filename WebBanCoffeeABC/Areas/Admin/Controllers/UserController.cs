@@ -4,20 +4,40 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebBanCoffeeABC.Models;
+using PagedList;
+using PagedList.Mvc;
 namespace WebBanCoffeeABC.Areas.Admin.Controllers
 {
     public class UserController : Controller
     {
         QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
         // GET: Admin/User
-        public ActionResult Index_Customer()
+        public ActionResult Index_Customer(int ? page)
         {
-            var items = db.tKhachHangs.ToList();
+            var pageSize = 5;
+            if (page == null)
+            {
+                page = 1;
+            }
+            IEnumerable<tKhachHang> items = db.tKhachHangs.ToList();
+            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            items = items.ToPagedList(pageIndex, pageSize);
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = page;
             return View(items);
         }
-        public ActionResult Index_Staff()
+        public ActionResult Index_Staff(int? page)
         {
-            var items = db.tNhanViens.ToList();
+            var pageSize = 5;
+            if (page == null)
+            {
+                page = 1;
+            }
+            IEnumerable<tNhanVien> items = db.tNhanViens.ToList();
+            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            items = items.ToPagedList(pageIndex, pageSize);
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = page;
             return View(items);
         }
 

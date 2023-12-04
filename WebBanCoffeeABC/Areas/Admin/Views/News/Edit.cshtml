@@ -1,8 +1,6 @@
-﻿@model PagedList.PagedList<WebBanCoffeeABC.Models.tKhachHang>
-@using PagedList;
-@using PagedList.Mvc;
+﻿@model WebBanCoffeeABC.Models.tTinTuc
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Add";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -79,91 +77,58 @@
         </button>
     </div>
 }
-
 <div class="card">
     <div class="card-header">
-        <h1 style="display:flex; justify-content:center;">QUẢN LÝ KHÁCH HÀNG</h1>
+        <h1 style="display:flex; justify-content:center;">QUẢN LÝ TIN TỨC</h1>
     </div>
     <div class="card-body">
-        <div class="row" style="margin-bottom:15px;">
-            <div class="col-6" style="display:flex; align-items:center;">
-                <h3 class="card-title">Danh Sách khách hàng</h3>
+        <h4 class="card-title">Chỉnh Sửa Tin Tức</h4>
+        <form class="forms-sample" action="/admin/news/edit" method="post">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                <label for="exampleInputName1">Tên Bài Viết</label>
+                <input type="text" class="form-control" id="exampleInputName1" placeholder="Tên bài viết ..." name="TenTinTuc" value="@Model.TenTinTuc">
+                <input type="hidden" name="Id" value="@Model.Id" />
             </div>
-            @* <div class="card-tools col-6">
-                    <a href="#" class="btn btn-danger" id="BtnDeleteAll" style="float:right;">Xóa Nhiều</a>
-                    <a href="/admin/user/add" class="btn btn-primary" style="float:right;margin-right:15px;">Thêm Mới</a>
-                </div>*@
-        </div>
-        <table class="table table-bordered">
-            <thead>
-                <tr class="text-center">
-                    <th>STT</th>
-                    <th>Ảnh</th>
-                    <th>Mã Khách Hàng</th>
-                    <th>Tên Khách Hàng</th>
-                    <th>Loại Khách Hàng</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null && Model.Any())
-                {
-                    var i = 0;
-                    foreach (var item in Model)
-                    {
-                        <tr class="table-info text-center" id="trow_@item.MaKhanhHang">
-                            <td> @(i+1)</td>
-                            <td><img src="@item.AnhDaiDien" width="60" /></td>
-                            <td>@item.MaKhanhHang</td>
-                            <td>@item.TenKhachHang</td>
-                            <td>@item.LoaiKhachHang</td>
-                            <td>
-                                <a href="/admin/user/detail_customer/@item.MaKhanhHang" class="btn btn-sm btn-success"><i class="mdi mdi-eye"></i></a>
-                                @*<a href="/admin/user/edit/@item.MaKhanhHang" class="btn btn-sm btn-warning"><i class="mdi mdi-pen"></i></a>*@
-                                @*<a href="#" class="btn btn-sm btn-danger btnDelete" data-id="@item.MaKhanhHang"><i class="mdi mdi-delete"></i></a>*@
-                            </td>
-                        </tr>
-                        i++;
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="7">Hiện tại chưa có dữ liệu nào</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="row">
-        <div class="col-5"></div>
-        <div class="col-3">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-        </div>
-        <div class="col-5"></div>
+            <div class="form-group">
+                <label for="exampleInputPassword4">Mô Tả</label>
+                <textarea class="form-control" id="exampleInputPassword4" placeholder="Mô tả bài viết ... " name="MoTa">@Html.Raw(Model.MoTa)</textarea>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword4">Nội Dung Bài Viết</label>
+                <textarea class="form-control" id="txtDetail" placeholder="Nội Dung bài viết ..." name="NoiDung">@Html.Raw(Model.NoiDung)</textarea>
+            </div>
+            <div class="form-group">
+                <label>Ảnh Đại Diện</label>
+                <div class="input-group col-xs-12">
+                    <input type="text" class="form-control file-upload-info" placeholder="Upload Image" id="txtImage" name="AnhDaiDien" value="@Model.AnhDaiDien">
+                    <span class="input-group-append">
+                        <input class="file-upload-browse btn btn-gradient-primary" type="button" onclick="BrowseServer('txtImage');" value="Upload" />
+                    </span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+            <a href="/admin/news/index" class="btn btn-light">Cancel</a>
+        </form>
     </div>
 </div>
 
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('body').on('click', '.btnDelete', function () {
-                var id = $(this).data('id');
-                var conf = confirm("Bạn có chắc về hành động này");
-                if (conf == true) {
-                    $.ajax({
-                        url: '/admin/user/delete',
-                        type: 'POST',
-                        data: { id: id },
-                        success: function (rs) {
-                            if (rs.success) {
-                                $('#trow_' + id).remove();
-                                location.reload();
-                            }
-                        }
-                    });
-                }
+            CKEDITOR.replace('txtDetail', {
+                customConfig: '/content/ckeditor/config.js',
+                extraAllowedContent: 'span',
             });
         });
+
+        function BrowseServer(field) {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                document.getElementById(field).value = fileUrl;
+            };
+            finder.popup();
+        }
     </script>
 }

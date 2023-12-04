@@ -1,4 +1,4 @@
-﻿@model PagedList.PagedList<WebBanCoffeeABC.Models.tKhachHang>
+﻿@model PagedList.PagedList<WebBanCoffeeABC.Models.tTinTuc>
 @using PagedList;
 @using PagedList.Mvc;
 @{
@@ -82,45 +82,40 @@
 
 <div class="card">
     <div class="card-header">
-        <h1 style="display:flex; justify-content:center;">QUẢN LÝ KHÁCH HÀNG</h1>
+        <h1 style="display:flex; justify-content:center;">QUẢN LÝ TIN TỨC</h1>
     </div>
     <div class="card-body">
         <div class="row" style="margin-bottom:15px;">
             <div class="col-6" style="display:flex; align-items:center;">
-                <h3 class="card-title">Danh Sách khách hàng</h3>
+                <h3 class="card-title">Danh Sách Tin Tức</h3>
             </div>
-            @* <div class="card-tools col-6">
-                    <a href="#" class="btn btn-danger" id="BtnDeleteAll" style="float:right;">Xóa Nhiều</a>
-                    <a href="/admin/user/add" class="btn btn-primary" style="float:right;margin-right:15px;">Thêm Mới</a>
-                </div>*@
+            <div class="card-tools col-6">
+                <a href="/admin/News/add" class="btn btn-primary" style="float:right;margin-right:15px;">Thêm Mới</a>
+            </div>
         </div>
         <table class="table table-bordered">
             <thead>
                 <tr class="text-center">
                     <th>STT</th>
-                    <th>Ảnh</th>
-                    <th>Mã Khách Hàng</th>
-                    <th>Tên Khách Hàng</th>
-                    <th>Loại Khách Hàng</th>
+                    <th>Ảnh Tin Tức</th>
+                    <th>Tên Tin Tức</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @if (Model != null && Model.Any())
                 {
-                    var i = 0;
+                    var i = (ViewBag.Page - 1) * ViewBag.PageSize + 1;
                     foreach (var item in Model)
                     {
-                        <tr class="table-info text-center" id="trow_@item.MaKhanhHang">
-                            <td> @(i+1)</td>
-                            <td><img src="@item.AnhDaiDien" width="60" /></td>
-                            <td>@item.MaKhanhHang</td>
-                            <td>@item.TenKhachHang</td>
-                            <td>@item.LoaiKhachHang</td>
+                        <tr class="table-info text-center" id="trow_@item.Id">
+                            <td> @(i)</td>
+                            <td><img src="@item.AnhDaiDien" style="width:100px; height:100px; border-radius:unset;" /></td>
+                            <td>@item.TenTinTuc</td>
                             <td>
-                                <a href="/admin/user/detail_customer/@item.MaKhanhHang" class="btn btn-sm btn-success"><i class="mdi mdi-eye"></i></a>
-                                @*<a href="/admin/user/edit/@item.MaKhanhHang" class="btn btn-sm btn-warning"><i class="mdi mdi-pen"></i></a>*@
-                                @*<a href="#" class="btn btn-sm btn-danger btnDelete" data-id="@item.MaKhanhHang"><i class="mdi mdi-delete"></i></a>*@
+                                <a href="/admin/News/detail/@item.Id" class="btn btn-sm btn-success"><i class="mdi mdi-eye"></i></a>
+                                <a href="/admin/News/edit/@item.Id" class="btn btn-sm btn-warning"><i class="mdi mdi-pen"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger btnDelete" data-id="@item.Id"><i class="mdi mdi-delete"></i></a>
                             </td>
                         </tr>
                         i++;
@@ -129,7 +124,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="7">Hiện tại chưa có dữ liệu nào</td>
+                        <td colspan="4">Hiện tại chưa có dữ liệu nào</td>
                     </tr>
                 }
             </tbody>
@@ -152,7 +147,7 @@
                 var conf = confirm("Bạn có chắc về hành động này");
                 if (conf == true) {
                     $.ajax({
-                        url: '/admin/user/delete',
+                        url: '/admin/news/delete',
                         type: 'POST',
                         data: { id: id },
                         success: function (rs) {
