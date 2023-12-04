@@ -13,8 +13,8 @@ namespace WebBanCoffeeABC.Controllers
         // GET: ABCHome
         public ActionResult Index(FormCollection f)
         {
-            return View(db.tDanhMucSPs.ToList());
-
+            var p = db.tDanhMucSPs.ToList();
+            return View(p);
         }
         public ActionResult About()
         {

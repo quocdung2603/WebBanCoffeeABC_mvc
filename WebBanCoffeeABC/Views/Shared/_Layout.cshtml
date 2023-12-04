@@ -1,5 +1,4 @@
 ﻿@using WebBanCoffeeABC.Models;
-
 @{
     tUser user = Session["User"] as tUser;
     QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
@@ -111,6 +110,9 @@
                                 <a href="@Url.Action("Shop","Shop")">Shop</a>
                             </li>
 
+                            <li>
+                                <a href="@Url.Action("Index","ABCNews")">News</a>
+                            </li>
 
                             <li>
                                 <a href="@Url.Action("about","ABCHome")">About</a>
