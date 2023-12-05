@@ -12,7 +12,7 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
     {
         QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
         // GET: Admin/Order
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string SortOrder)
         {
             if (Session["Admin"] == null)
             {
@@ -24,6 +24,22 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
                 page = 1;
             }
             IEnumerable<tHoaDonBan> items = db.tHoaDonBans.ToList();
+            ViewBag.MaHD = SortOrder == "MaHD" ? "MaHDd" : "MaHD";
+            ViewBag.NgayTao = SortOrder == "NgayTao" ? "NgayTaod" : "NgayTao";
+            ViewBag.MaKH = SortOrder == "MaKH" ? "MaKHd" : "MaKH";
+            ViewBag.PT = SortOrder == "PT" ? "PTd" : "PT";
+            switch(SortOrder)
+            {
+                case "MaHD": items = items.OrderBy(x => x.MaHoaDon);break;
+                case "MaHDd": items = items.OrderByDescending(x => x.MaHoaDon);break;
+                case "MaKH": items = items.OrderBy(x => x.MaKhachHang); break;
+                case "MaKHd": items = items.OrderByDescending(x => x.MaKhachHang); break;
+                case "NgayTao": items = items.OrderBy(x => x.NgayHoaDon); break;
+                case "NgayTaod": items = items.OrderByDescending(x => x.NgayHoaDon); break;
+                case "PT": items = items.OrderBy(x => x.PhuongThucThanhToan); break;
+                case "PTd": items = items.OrderByDescending(x => x.PhuongThucThanhToan); break;
+                default:break;
+            }    
             var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             items = items.ToPagedList(pageIndex, pageSize);
             ViewBag.PageSize = pageSize;

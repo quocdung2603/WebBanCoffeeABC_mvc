@@ -196,7 +196,9 @@
                 <tr class="text-center">
                     <th>STT</th>
                     <th>Ảnh Tin Tức</th>
-                    <th>Tên Tin Tức</th>
+                    <th>@Html.ActionLink("Tên Tin Tức","Index", new {SortOrder = ViewBag.Ten })</th>
+                    <th>@Html.ActionLink("Ngày Tạo", "Index", new { SortOrder = ViewBag.NgayTao })</th>
+                    <th>@Html.ActionLink("Ngày Chỉnh Sửa", "Index", new { SortOrder = ViewBag.NgayCS })</th>
                     <th></th>
                 </tr>
             </thead>
@@ -210,6 +212,8 @@
                             <td> @(i)</td>
                             <td><img src="@item.AnhDaiDien" style="width:100px; height:100px; border-radius:unset;" /></td>
                             <td>@item.TenTinTuc</td>
+                            <th>@item.NgayTao</th>
+                            <th>@item.NgayChinhSua</th>
                             <td>
                                 <a href="/admin/News/detail/@item.Id" class="btn btn-sm btn-success"><i class="mdi mdi-eye"></i></a>
                                 <a href="/admin/News/edit/@item.Id" class="btn btn-sm btn-warning"><i class="mdi mdi-pen"></i></a>

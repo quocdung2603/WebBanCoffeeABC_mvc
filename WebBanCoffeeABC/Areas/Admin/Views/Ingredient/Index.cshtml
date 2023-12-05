@@ -195,8 +195,8 @@
             <thead>
                 <tr class="text-center">
                     <th>STT</th>
-                    <th>Mã Nguyên Liệu</th>
-                    <th>Tên Nguyên Liệu</th>
+                    <th>@Html.ActionLink("Mã Nguyên Liệu", "Index", new { SortOrder = ViewBag.MaNguyenLieu })</th>
+                    <th>@Html.ActionLink("Tên Nguyên Liệu", "Index", new { SortOrder = ViewBag.TenNguyenLieu })</th>
                     <th></th>
                 </tr>
             </thead>

@@ -13,7 +13,7 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
     {
         QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
         // GET: Admin/Product
-        public ActionResult Index(int?page)
+        public ActionResult Index(int?page, string SortOrder)
         {
             if (Session["Admin"] == null)
             {
@@ -24,7 +24,26 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
             {
                 page = 1;
             }
+            ViewBag.MaSP = SortOrder == "MaSP" ? "MaSP_desc" : "MaSP";
+            ViewBag.TenSP = SortOrder == "TenSP" ? "TenSP_desc" : "TenSP";
             IEnumerable<tDanhMucSP> items = db.tDanhMucSPs.ToList();
+            switch (SortOrder)
+            {
+                case "MaSP":
+                    items = items.OrderBy(x => x.MaSP);
+                    break;
+                case "MaSP_desc":
+                    items = items.OrderByDescending(x => x.MaSP);
+                    break;
+                case "TenSP":
+                    items = items.OrderBy(x => x.TenSP);
+                    break;
+                case "TenSP_desc":
+                    items = items.OrderByDescending(x => x.TenSP);
+                    break;
+                default:
+                    break;
+            }
             var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             items = items.ToPagedList(pageIndex, pageSize);
             ViewBag.PageSize = pageSize;

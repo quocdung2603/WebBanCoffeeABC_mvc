@@ -12,7 +12,7 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
     {
         QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
         // GET: Admin/Manufacturer
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string SortOrder)
         {
             if (Session["Admin"] == null)
             {
@@ -24,6 +24,16 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
                 page = 1;
             }
             IEnumerable<tHangSX> items = db.tHangSXes.ToList();
+            ViewBag.MaHang = SortOrder == "MaHang" ? "MaHang_desc" : "MaHang";
+            ViewBag.TenHang = SortOrder == "TenHang" ? "TenHang_desc" : "TenHang";
+            switch (SortOrder)
+            {
+                case "MaHang": items = items.OrderBy(x => x.MaHangSX); break;
+                case "MaHang_desc": items = items.OrderByDescending(x => x.MaHangSX);break;
+                case "TenHang": items = items.OrderBy(x => x.TenHangSX); break;
+                case "TenHang_desc": items = items.OrderByDescending(x => x.TenHangSX); break;
+                default:break;
+            }
             var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             items = items.ToPagedList(pageIndex, pageSize);
             ViewBag.PageSize = pageSize;

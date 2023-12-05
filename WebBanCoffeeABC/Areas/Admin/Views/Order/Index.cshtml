@@ -195,10 +195,10 @@
             <thead>
                 <tr class="text-center">
                     <th>STT</th>
-                    <th>Mã Hóa Đơn</th>
-                    <th>Ngày Tạo</th>
-                    <th>Mã Khách Hàng</th>
-                    <th>Phương Thức Thanh Toán</th>
+                    <th>@Html.ActionLink("Mã Hóa Đơn", "Index", new { SortOrder = ViewBag.MaHD })</th>
+                    <th>@Html.ActionLink("Ngày Tạo", "Index", new { SortOrder = ViewBag.NgayTao })</th>
+                    <th>@Html.ActionLink("Mã Khách Hàng", "Index", new { SortOrder = ViewBag.MaKH })</th>
+                    <th>@Html.ActionLink("Phương Thức Thanh Toán", "Index", new { SortOrder = ViewBag.PT })</th>
                     <th></th>
                 </tr>
             </thead>

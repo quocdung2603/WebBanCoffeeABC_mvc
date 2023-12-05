@@ -197,9 +197,9 @@
                 <tr class="text-center">
                     <th>STT</th>
                     <th>Ảnh</th>
-                    <th>Mã Khách Hàng</th>
-                    <th>Tên Khách Hàng</th>
-                    <th>Loại Khách Hàng</th>
+                    <th>@Html.ActionLink("Mã Khách Hàng", "Index_Customer", new { SortOrder = ViewBag.MaU })</th>
+                    <th>@Html.ActionLink("Tên Khách Hàng", "Index_Customer", new { SortOrder = ViewBag.TenU })</th>
+                    <th>@Html.ActionLink("Loại Khách Hàng", "Index_Customer", new { SortOrder = ViewBag.Loai })</th>
                     <th></th>
                 </tr>
             </thead>
