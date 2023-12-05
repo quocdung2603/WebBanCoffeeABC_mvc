@@ -186,7 +186,12 @@
                 <a href="/admin/product/add" class="btn btn-primary" style="float:right;margin-right:15px;">Thêm Mới</a>
             </div>
         </div>
-        <table class="table table-bordered">
+        <div class="row">
+            <div class="input-group input-group-sm">
+                <input type="text" id="Searchtext" class="Searchtext" name="Searchtext" placeholder="Nhập nội dung tìm kiếm..." style="width:300px; margin-bottom:20px;" />
+            </div>
+        </div>
+        <table class="table table-bordered table-sm" id="myTable">
             <thead>
                 <tr class="text-center">
                     <th>STT</th>
@@ -198,7 +203,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="myTable1">
                 @if (Model != null && Model.Any())
                 {
                     var i = 0;
@@ -317,5 +322,23 @@
             });
         });
     </script>
-
+    <script>
+        $(document).ready(function () {
+            $("#Searchtext").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable1 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "scrollY": "450px",
+                "scrollCollapse": true,
+                "paging": true
+            });
+        });
+    </script>
 }

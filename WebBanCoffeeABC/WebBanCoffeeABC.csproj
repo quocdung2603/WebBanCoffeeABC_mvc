@@ -3556,6 +3556,8 @@
     <Content Include="Views\Shop\Shop.cshtml" />
     <Content Include="Views\ABCHome\ProductDetails.cshtml" />
     <Content Include="Views\ABCHome\ShowP.cshtml" />
+    <Content Include="Views\ABCNews\Detail.cshtml" />
+    <Content Include="Views\ABCNews\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
