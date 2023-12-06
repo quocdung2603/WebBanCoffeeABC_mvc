@@ -12,7 +12,7 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
     {
         QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
         // GET: Admin/User
-        public ActionResult Index_Customer(int ? page)
+        public ActionResult Index_Customer(int ? page, string SortOrder)
         {
             if (Session["Admin"] == null)
             {
@@ -24,13 +24,26 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
                 page = 1;
             }
             IEnumerable<tKhachHang> items = db.tKhachHangs.ToList();
+            ViewBag.MaU = SortOrder == "MaU" ? "MaUd" : "MaU";
+            ViewBag.TenU = SortOrder == "TenU" ? "TenUd" : "TenU";
+            ViewBag.Loai = SortOrder == "Loai" ? "Loaid" : "Loai";
+            switch(SortOrder)
+            {
+                case "MaU": items = items.OrderBy(x => x.MaKhanhHang);break;
+                case "MaUd": items = items.OrderByDescending(x => x.MaKhanhHang);break;
+                case "TenU": items = items.OrderBy(x => x.TenKhachHang); break;
+                case "TenUd": items = items.OrderByDescending(x => x.TenKhachHang); break;
+                case "Loai": items = items.OrderBy(x => x.LoaiKhachHang); break;
+                case "Loaid": items = items.OrderByDescending(x => x.LoaiKhachHang); break;
+                default:break;
+            }    
             var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             items = items.ToPagedList(pageIndex, pageSize);
             ViewBag.PageSize = pageSize;
             ViewBag.Page = page;
             return View(items);
         }
-        public ActionResult Index_Staff(int? page)
+        public ActionResult Index_Staff(int? page, string SortOrder)
         {
             if (Session["Admin"] == null)
             {
@@ -42,6 +55,19 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
                 page = 1;
             }
             IEnumerable<tNhanVien> items = db.tNhanViens.ToList();
+            ViewBag.MaU = SortOrder == "MaU" ? "MaUd" : "MaU";
+            ViewBag.TenU = SortOrder == "TenU" ? "TenUd" : "TenU";
+            ViewBag.Loai = SortOrder == "Loai" ? "Loaid" : "Loai";
+            switch (SortOrder)
+            {
+                case "MaU": items = items.OrderBy(x => x.MaNhanVien); break;
+                case "MaUd": items = items.OrderByDescending(x => x.MaNhanVien); break;
+                case "TenU": items = items.OrderBy(x => x.TenNhanVien); break;
+                case "TenUd": items = items.OrderByDescending(x => x.TenNhanVien); break;
+                case "Loai": items = items.OrderBy(x => x.ChucVu); break;
+                case "Loaid": items = items.OrderByDescending(x => x.ChucVu); break;
+                default: break;
+            }
             var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             items = items.ToPagedList(pageIndex, pageSize);
             ViewBag.PageSize = pageSize;

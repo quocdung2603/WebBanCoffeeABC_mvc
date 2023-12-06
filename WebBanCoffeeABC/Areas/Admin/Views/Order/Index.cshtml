@@ -186,18 +186,23 @@
                 <a href="/admin/order/add" class="btn btn-primary" style="float:right;margin-right:15px;">Thêm Mới</a>
             </div>
         </div>
+        <div class="row">
+            <div class="input-group input-group-sm">
+                <input type="text" id="Searchtext" class="Searchtext" name="Searchtext" placeholder="Nhập nội dung tìm kiếm..." style="width:300px; margin-bottom:20px;" />
+            </div>
+        </div>
         <table class="table table-bordered">
             <thead>
                 <tr class="text-center">
                     <th>STT</th>
-                    <th>Mã Hóa Đơn</th>
-                    <th>Ngày Tạo</th>
-                    <th>Mã Khách Hàng</th>
-                    <th>Phương Thức Thanh Toán</th>
+                    <th>@Html.ActionLink("Mã Hóa Đơn", "Index", new { SortOrder = ViewBag.MaHD })</th>
+                    <th>@Html.ActionLink("Ngày Tạo", "Index", new { SortOrder = ViewBag.NgayTao })</th>
+                    <th>@Html.ActionLink("Mã Khách Hàng", "Index", new { SortOrder = ViewBag.MaKH })</th>
+                    <th>@Html.ActionLink("Phương Thức Thanh Toán", "Index", new { SortOrder = ViewBag.PT })</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="myTable">
                 @if (Model != null && Model.Any())
                 {
                     var i = 0;
@@ -264,6 +269,16 @@
                         }
                     });
                 }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#Searchtext").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
             });
         });
     </script>

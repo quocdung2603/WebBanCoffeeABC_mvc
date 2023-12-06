@@ -32,7 +32,6 @@
         <ul class="navbar-nav navbar-nav-right">
             @if (Session["Admin"] != null)
             {
-                QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
                 tUser u = (tUser)Session["Admin"];
                 var nv = db.tNhanViens.FirstOrDefault(x => x.username == u.username);
 

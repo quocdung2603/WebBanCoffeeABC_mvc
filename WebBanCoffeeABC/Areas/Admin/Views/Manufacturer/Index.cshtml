@@ -183,21 +183,24 @@
                 <h3 class="card-title">Danh Sách Hãng Sản Xuất</h3>
             </div>
             <div class="card-tools col-6">
-                <a href="#" class="btn btn-danger" id="BtnDeleteAll" style="float:right;">Xóa Nhiều</a>
                 <a href="/admin/manufacturer/add" class="btn btn-primary" style="float:right;margin-right:15px;">Thêm Mới</a>
-
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group input-group-sm">
+                <input type="text" id="Searchtext" class="Searchtext" name="Searchtext" placeholder="Nhập nội dung tìm kiếm..." style="width:300px; margin-bottom:20px;" />
             </div>
         </div>
         <table class="table table-bordered">
             <thead>
                 <tr class="text-center">
                     <th>STT</th>
-                    <th>Mã Loại Sản Phẩm</th>
-                    <th>Tên Loại Sản Phẩm</th>
+                    <th>@Html.ActionLink("Mã Hãng Sản Xuất", "Index", new { SortOrder = ViewBag.MaHang })</th>
+                    <th>@Html.ActionLink("Tên Hãng Sản Xuất", "Index", new { SortOrder = ViewBag.TenHang })</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="myTable">
                 @if (Model != null && Model.Any())
                 {
                     var i = 0;
@@ -252,6 +255,16 @@
                         }
                     });
                 }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#Searchtext").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
             });
         });
     </script>
