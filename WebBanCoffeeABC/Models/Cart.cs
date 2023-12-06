@@ -24,13 +24,14 @@ namespace WebBanCoffeeABC.Models
         public Cart(string Productid, string sizeid, int numproduct)
         {
             this.Productid = Productid;
+            // Phải lấy thông tin từ Table Size
             tDanhMucSP s = db.tDanhMucSPs.SingleOrDefault(n => n.MaSP == this.Productid);
             var sz = db.tKichThuocs.FirstOrDefault(x => x.MaSP == Productid && x.MaKichThuoc == sizeid);
             this.ProductName = s.TenSP;
             this.Manufacturer = s.MaHangSX;
             this.Productintroduction = s.GioiThieuSP;
             //this.ProductImage = s.Illsutration;
-            if (sz.GiaKhuyenMai != null)
+            if (sz.GiaKhuyenMai != decimal.Zero )
             {
                 this.ProductPrice = decimal.Parse(sz.GiaKhuyenMai.ToString());
             }
@@ -40,8 +41,10 @@ namespace WebBanCoffeeABC.Models
             }
             this.ProductNumber = 1;
             //this.Colorid = colorid;
-            this.Sizeid = sizeid;
+            this.Sizeid = sz.MaKichThuoc;
             this.ProductNumber = numproduct;
+
+            
         }
     }
 }

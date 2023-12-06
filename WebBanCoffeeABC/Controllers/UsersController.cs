@@ -17,7 +17,7 @@ namespace WebBanCoffeeABC.Controllers
         }
         public ActionResult Logout()
         {
-            Session["tUser"] = null;
+            Session["User"] = null;
             return RedirectToAction("Index", "ABCHome");
         }
         public ActionResult Information(int id)

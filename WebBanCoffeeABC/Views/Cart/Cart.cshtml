@@ -50,7 +50,7 @@
                             </td>
                             @{
                                 string size = "";
-                                string color = "";
+                                
                                 foreach (var sz in lstsize)
                                 {
                                     if (sz.MaKichThuoc == item.Sizeid)
@@ -63,7 +63,7 @@
                             <td style="text-align: center">
                                 @size
                             </td>
-                            
+
                             <td style="text-align: center"> @Html.FormatValue(@item.ProductPrice, "{0:#,#0}") đ</td>
                             @using (Html.BeginForm("UpdateCart", "cart", new { productid = item.Productid }))
                             {
@@ -83,51 +83,41 @@
 
                                 <td style="text-align: center"> @Html.FormatValue(@item.TotalProductPrice, "{0:#,#0}") đ</td>
                                 <td class="p-l-50">
-                                    <input type="submit" value="Update" class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10" " />
+                                    <input type="submit" value="Update" class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"  />
                                 </td>
+                                }
+                            </tr>
                             }
-
-                        </tr>
-                    }
-                    <tr>
-                        <td colspan="2" style="text-align: center">
-                            Subtotal( <span style="color:red">@ViewBag.Number items </span> ) :
-                        </td>
-                        <td colspan="5">
-                            <div class="flex-r-m stext-101 cl2 size-119 p-lr-15 trans-04 m-tb-10">
-                                @Html.FormatValue(ViewBag.TotalPrice, "{0:#,#0}") đ
-
-                            </div>
-
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                <div class="flex-w flex-m m-r-20 m-tb-5">
-
-                </div>
-
-                <div>
-                    <a class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
-                       href="@Url.Action("ClearCart","Cart")">Clear Shopping Cart</a>
-                </div>
-            </div>
-            <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                <div class="flex-w flex-m m-r-20 m-tb-5">
-
-                </div>
-
-                <div>
-                    <a href="@Url.Action("ShoppingCard","Cart")"
-                       class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-                        Shopping Cart
-                    </a>
+                            <tr>
+                                <td colspan="2" style="text-align: center">
+                                    Subtotal( <span style="color:red">@ViewBag.Number items </span> ) :
+                                </td>
+                                <td colspan="5">
+                                    <div class="flex-r-m stext-101 cl2 size-119 p-lr-15 trans-04 m-tb-10">
+                                        @Html.FormatValue(ViewBag.TotalPrice, "{0:#,#0}") đ
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                        <div class="flex-w flex-m m-r-20 m-tb-5">
+                        </div>
+                        <div>
+                            <a class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
+                               href="@Url.Action("ClearCart","Cart")">Clear Shopping Cart</a>
+                        </div>
+                    </div>
+                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                        <div class="flex-w flex-m m-r-20 m-tb-5">
+                        </div>
+                        <div>
+                            <a href="@Url.Action("ShoppingCard","Cart")"
+                               class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+                                Shopping Cart
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-</div>
-
