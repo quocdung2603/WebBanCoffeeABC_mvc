@@ -33,6 +33,11 @@ namespace WebBanCoffeeABC.Controllers
             }
             else
             {
+                var us = db.tNhanViens.FirstOrDefault(x => x.username == UserName);
+                if(us != null)
+                {
+                    Session["Admin"] = user;
+                }
                 Session["User"] = user;
                 Session["UserName1"] = UserName;
                 Session["Password1"] = Password;

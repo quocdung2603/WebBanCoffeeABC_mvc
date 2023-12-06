@@ -75,6 +75,12 @@
                             <a href="#" class="flex-c-m trans-04 p-lr-25">
                                 My Order
                             </a>
+                            if (Session["Admin"] != null)
+                            {
+                                <a href="/admin/home/index" class="flex-c-m trans-04 p-lr-25">
+                                    Manage
+                                </a>
+                            }
                             <a href="@Url.Action("Logout","Users")" class="flex-c-m trans-04 p-lr-25">
                                 Logout
                             </a>
