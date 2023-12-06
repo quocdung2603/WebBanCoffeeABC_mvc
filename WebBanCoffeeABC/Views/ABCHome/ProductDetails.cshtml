@@ -47,10 +47,9 @@
                                         <select class="js-select2" name="Type-Size">
                                             @foreach (var item in Model.tKichThuocs)
                                                 {
-                                                    <option value="@item.MaKichThuoc">@item.KichThuoc</option>
+                                                    <option value="@item.MaKichThuoc" data-value="@item.GiaBan">@item.KichThuoc</option>
                                                 }
                                         </select>
-
                                         <div class="dropDownSelect2"></div>
                                     </div>
                                 </div>

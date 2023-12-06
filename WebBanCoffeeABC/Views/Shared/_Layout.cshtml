@@ -130,9 +130,9 @@
                             <i class="zmdi zmdi-search"></i>
                         </div>
 
-                        @*@Html.Action("ViewCard", "Cart")*@
+                        @Html.Action("ViewCard", "Cart")
 
-                        @if (Session["tUser"] == null)
+                        @if (Session["User"] == null)
                         {
                             <a href="@Url.Action("Login","Login")" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
 
@@ -239,7 +239,7 @@
 
             <ul class="main-menu-m">
                 <li>
-                    <a href="@Url.Action("Index","CozaHome")">Home</a>
+                    <a href="@Url.Action("Index","ABCHome")">Home</a>
 
                 </li>
 

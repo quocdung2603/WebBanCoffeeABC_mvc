@@ -15,21 +15,29 @@ namespace WebBanCoffeeABC.Models
         public string Productintroduction { get; set; }
         public decimal ProductPrice { get; set; }
         public int ProductNumber { get; set; }
-        public int Sizeid { get; set; }
+        public string Sizeid { get; set; }
         //public int Colorid { get; set; }
         public decimal TotalProductPrice
         {
             get { return ProductNumber * ProductPrice; }
         }
-        public Cart(string Productid, int sizeid, int colorid, int numproduct)
+        public Cart(string Productid, string sizeid, int numproduct)
         {
             this.Productid = Productid;
             tDanhMucSP s = db.tDanhMucSPs.SingleOrDefault(n => n.MaSP == this.Productid);
+            var sz = db.tKichThuocs.FirstOrDefault(x => x.MaSP == Productid && x.MaKichThuoc == sizeid);
             this.ProductName = s.TenSP;
             this.Manufacturer = s.MaHangSX;
             this.Productintroduction = s.GioiThieuSP;
             //this.ProductImage = s.Illsutration;
-            this.ProductPrice = decimal.Parse(s.GiaGoc.ToString());
+            if (sz.GiaKhuyenMai != null)
+            {
+                this.ProductPrice = decimal.Parse(sz.GiaKhuyenMai.ToString());
+            }
+            else
+            {
+                this.ProductPrice = decimal.Parse(sz.GiaBan.ToString());
+            }
             this.ProductNumber = 1;
             //this.Colorid = colorid;
             this.Sizeid = sizeid;

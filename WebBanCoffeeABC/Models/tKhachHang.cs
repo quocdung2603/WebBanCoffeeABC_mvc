@@ -20,7 +20,7 @@ namespace WebBanCoffeeABC.Models
             this.tHoaDonBans = new HashSet<tHoaDonBan>();
         }
     
-        public string MaKhanhHang { get; set; }
+        public string MaKhachHang { get; set; }
         public string username { get; set; }
         public string TenKhachHang { get; set; }
         public Nullable<System.DateTime> NgaySinh { get; set; }

@@ -101,7 +101,7 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
 
         public ActionResult Detail_Customer(string id)
         {
-            var kh = db.tKhachHangs.FirstOrDefault(x => x.MaKhanhHang == id);
+            var kh = db.tKhachHangs.FirstOrDefault(x => x.MaKhachHang == id);
             return View(kh);
         }
 

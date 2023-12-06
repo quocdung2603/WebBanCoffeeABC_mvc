@@ -33,7 +33,7 @@ namespace WebBanCoffeeABC.Controllers
             }
             else
             {
-                Session["tUser"] = user;
+                Session["User"] = user;
                 Session["UserName1"] = UserName;
                 Session["Password1"] = Password;
                 return RedirectToAction("Index", "ABCHome");
