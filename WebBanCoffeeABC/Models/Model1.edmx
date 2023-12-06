@@ -58,9 +58,9 @@
         </EntityType>
         <EntityType Name="tKhachHang">
           <Key>
-            <PropertyRef Name="MaKhanhHang" />
+            <PropertyRef Name="MaKhachHang" />
           </Key>
-          <Property Name="MaKhanhHang" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="MaKhachHang" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="100" />
           <Property Name="TenKhachHang" Type="nvarchar" MaxLength="100" />
           <Property Name="NgaySinh" Type="date" />
@@ -206,7 +206,7 @@
           <End Role="tHoaDonBan" Type="Self.tHoaDonBan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tKhachHang">
-              <PropertyRef Name="MaKhanhHang" />
+              <PropertyRef Name="MaKhachHang" />
             </Principal>
             <Dependent Role="tHoaDonBan">
               <PropertyRef Name="MaKhachHang" />
@@ -419,9 +419,9 @@
         </EntityType>
         <EntityType Name="tKhachHang">
           <Key>
-            <PropertyRef Name="MaKhanhHang" />
+            <PropertyRef Name="MaKhachHang" />
           </Key>
-          <Property Name="MaKhanhHang" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaKhachHang" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="TenKhachHang" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="NgaySinh" Type="DateTime" Precision="0" />
@@ -602,7 +602,7 @@
           <End Role="tHoaDonBan" Type="Self.tHoaDonBan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tKhachHang">
-              <PropertyRef Name="MaKhanhHang" />
+              <PropertyRef Name="MaKhachHang" />
             </Principal>
             <Dependent Role="tHoaDonBan">
               <PropertyRef Name="MaKhachHang" />
@@ -784,7 +784,7 @@
           <EntitySetMapping Name="tKhachHangs">
             <EntityTypeMapping TypeName="QLCoffee_ABCModel.tKhachHang">
               <MappingFragment StoreEntitySet="tKhachHang">
-                <ScalarProperty Name="MaKhanhHang" ColumnName="MaKhanhHang" />
+                <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="TenKhachHang" ColumnName="TenKhachHang" />
                 <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />

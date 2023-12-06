@@ -29,8 +29,8 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
             ViewBag.Loai = SortOrder == "Loai" ? "Loaid" : "Loai";
             switch(SortOrder)
             {
-                case "MaU": items = items.OrderBy(x => x.MaKhanhHang);break;
-                case "MaUd": items = items.OrderByDescending(x => x.MaKhanhHang);break;
+                case "MaU": items = items.OrderBy(x => x.MaKhachHang);break;
+                case "MaUd": items = items.OrderByDescending(x => x.MaKhachHang);break;
                 case "TenU": items = items.OrderBy(x => x.TenKhachHang); break;
                 case "TenUd": items = items.OrderByDescending(x => x.TenKhachHang); break;
                 case "Loai": items = items.OrderBy(x => x.LoaiKhachHang); break;
