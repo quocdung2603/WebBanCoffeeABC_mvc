@@ -13,7 +13,7 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
     {
         QLCoffee_ABCEntities db = new QLCoffee_ABCEntities();
         // GET: Admin/Product
-        public ActionResult Index(int?page, string SortOrder)
+        public ActionResult Index(int? page, string SortOrder)
         {
             if (Session["Admin"] == null)
             {
@@ -50,17 +50,17 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
             ViewBag.Page = page;
             return View(items);
         }
-        
+
         public ActionResult Add()
         {
-            ViewBag.ProductType = new SelectList(db.tLoaiSPs.ToList(), "MaLoai", "Loai"); 
+            ViewBag.ProductType = new SelectList(db.tLoaiSPs.ToList(), "MaLoai", "Loai");
             ViewBag.Manufacturer = new SelectList(db.tHangSXes.ToList(), "MaHangSX", "TenHangSX");
             ViewBag.Ingredient = db.tNguyenLieux.ToList();
             return View();
         }
 
         [HttpPost]
-        public ActionResult Add(FormCollection f , List<string> Images, List<int> rDefault, List<tKichThuoc> LProduct, List<tNguyenLieuSP> IP)
+        public ActionResult Add(FormCollection f, List<string> Images, List<int> rDefault, List<tKichThuoc> LProduct, List<tNguyenLieuSP> IP)
         {
             tDanhMucSP p = new tDanhMucSP();
             Random rd = new Random();
@@ -113,7 +113,7 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
                 });
             }
 
-            for(int i =0;i< IP.Count;i++)
+            for (int i = 0; i < IP.Count; i++)
             {
                 var mnl = f["IP[" + i + "].MaNguyenLieu"];
                 var l = Convert.ToDecimal(f["IP[" + i + "].Luong"]);
@@ -123,46 +123,45 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
                     MaSP = p.MaSP,
                     Luong = l,
                 });
-            }   
+            }
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
         public ActionResult Detail(string id)
         {
             var item = db.tDanhMucSPs.FirstOrDefault(x => x.MaSP == id);
             return View(item);
         }
-         
+
         [HttpPost]
         public ActionResult Delete(string id)
         {
             var p = db.tDanhMucSPs.FirstOrDefault(x => x.MaSP == id);
-            if(p !=null)
+            if (p != null)
             {
                 var imgP = db.tAnhSPs.Where(x => x.MaSP == p.MaSP);
                 var szP = db.tKichThuocs.Where(x => x.MaSP == p.MaSP);
                 var iP = db.tNguyenLieuSPs.Where(x => x.MaSP == p.MaSP);
-                foreach(var item in imgP)
+                foreach (var item in imgP)
                 {
                     db.tAnhSPs.Remove(item);
                 }
-                foreach(var item in szP)
+                foreach (var item in szP)
                 {
                     db.tKichThuocs.Remove(item);
                 }
-                foreach(var item in iP)
+                foreach (var item in iP)
                 {
                     db.tNguyenLieuSPs.Remove(item);
                 }
                 db.tDanhMucSPs.Remove(p);
                 db.SaveChanges();
                 return Json(new { success = true });
-            }    
+            }
             return Json(new { success = false });
         }
-        
+
         public ActionResult Edit(string id)
         {
             var item = db.tDanhMucSPs.FirstOrDefault(x => x.MaSP == id);
@@ -177,7 +176,7 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
         {
             Random rd = new Random();
             var _id = f["MaSP"];
-            var p = db.tDanhMucSPs.FirstOrDefault(x=>x.MaSP == _id);
+            var p = db.tDanhMucSPs.FirstOrDefault(x => x.MaSP == _id);
             p.TenSP = f["TenSP"];
             p.MaLoai = f["MaLoai"];
             p.GioiThieuSP = f["GioiThieuSP"];
@@ -202,7 +201,7 @@ namespace WebBanCoffeeABC.Areas.Admin.Controllers
             {
                 for (int i = 0; i < Images.Count; i++)
                 {
-                    if (i  == rDefault[0])
+                    if (i == rDefault[0])
                     {
                         p.tAnhSPs.Add(new tAnhSP
                         {

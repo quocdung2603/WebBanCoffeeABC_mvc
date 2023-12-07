@@ -3487,7 +3487,6 @@
     <Content Include="Asset\vendor\slick\slick-theme.scss" />
     <Content Include="Asset\vendor\slick\slick.less" />
     <Content Include="Asset\vendor\slick\slick.scss" />
-    <Content Include="Areas\Admin\Views\Product\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Edit.cshtml" />
@@ -3635,6 +3634,7 @@
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <Content Include="bin\WebBanCoffeeABC.dll.config" />
+    <Content Include="Areas\Admin\Views\Product\Detail.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>

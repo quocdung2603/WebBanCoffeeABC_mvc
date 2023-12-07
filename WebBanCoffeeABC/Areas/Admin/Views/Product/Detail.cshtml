@@ -4,6 +4,7 @@
     ViewBag.Title = "Detail";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
 @section naviheader{
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
         <a class="navbar-brand brand-logo" href="/ABCHome/Index"><img src="~/Content/assets/images/logo.svg" alt="logo" /></a>
@@ -176,7 +177,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
-                <form class="forms-sample" action="/admin/product/detail" method="get">
+                <form class="forms-sample" action="/admin/product/detail">
                     <div class="card">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
@@ -390,3 +391,5 @@
     </div>
     <!-- /.card-footer-->
 </div>
+
+
